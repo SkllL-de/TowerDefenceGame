@@ -1,5 +1,5 @@
-# [从零开始的c++双人合作塔防游戏！](https://www.bilibili.com/video/BV1Zn4y1R7GT/?spm_id_from=333.337.search-card.all.click&vd_source=f0a5ed8cc6f6b9eeb36f9420ef202f78)
-*本人学习B站voidmatrix大大的课程，做的游戏项目（请注意：标题是b站视频的链接）*
+# c++双人合作塔防游戏！
+*本人学习B站* ***voidmatrix*** *大大《从零开始的 C++双人塔防游戏！》学习编写的练习项目*
 ## 开篇：遇到的困难与解决困难
 SDL库版本问题/visual studio版本问题：
  - 课程是2024年10月发布的，现在已经到了2026年4月  
