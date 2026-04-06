@@ -1,0 +1,11 @@
+# [从零开始的c++双人合作塔防游戏！](https://www.bilibili.com/video/BV1Zn4y1R7GT/?spm_id_from=333.337.search-card.all.click&vd_source=f0a5ed8cc6f6b9eeb36f9420ef202f78)
+*本人学习B站voidmatrix大大的课程，做的游戏项目（请注意：标题是b站视频的链接）*
+## 开篇：遇到的困难与解决困难
+SDL库版本问题/visual studio版本问题：
+ - 课程是2024年10月发布的，现在已经到了2026年4月  
+（2026年SDL2已经更新到了SDL3，visual studio2022更新到了visual studio 2026）
+- 课程分发了SDL2zip文件，我手动下载了2026年最新的SDL3。  
+  于是我遇到了SDL2与SDL3函数名不一致，宏定义不一致，函数使用方法不一致等等问题。
+- 以及sdl3_gfx需要手动编译，sdl3_gfx的github版本又是用vs2022写的，  
+  不能直接打开zip解压出的sln，需要新建vs2026项目导入.c.h文件调成release模式生成文件改成.lib等等等等   ~~balabala~~
+好在配置sdl库彻底完成demo项目运行正常，万里长城的第一块砖石已经砌下，以后还有很多块砖等着我搬呢。
