@@ -49,8 +49,9 @@ int main(int argc, char* argv[])
 	SDL_Point pos_cursor = { 0, 0 };
 	SDL_FRect rect_img = { 0, 0, suf_img->w, suf_img->h };
 	SDL_FRect rect_text = { 0, 0, suf_text->w, suf_text->h };
+
 	Uint64 last_counter = SDL_GetPerformanceCounter();
-	Uint
+	Uint64 counter_frequence = SDL_GetPerformanceFrequency();
 
 	while (!is_quit)
 	{
@@ -65,7 +66,18 @@ int main(int argc, char* argv[])
 				pos_cursor.x = event.motion.x;
 				pos_cursor.y = event.motion.y;
 			}
-		}//处理数据
+		}
+		
+		Uint64 current_counter = SDL_GetPerformanceCounter();
+		double delta_time = static_cast<double>(current_counter - last_counter) / (counter_frequence);
+		last_counter = current_counter;
+		if (delta_time * 1000 < 1000.0 / 60)
+		{
+			//为了保持60帧每秒的帧率，如果当前帧的时间小于1/60秒(1000.0/60毫秒)，就让程序等待一段时间
+			SDL_Delay(static_cast<Uint32>(1000.0 / 60 - delta_time * 1000));
+		}
+		std::cout << "帧时间: " << delta_time * 1000 << " ms" << std::endl;
+		//处理数据
 		rect_img.x = pos_cursor.x - suf_img->w / 2;
 		rect_img.y = pos_cursor.y - suf_img->h / 2;
 
