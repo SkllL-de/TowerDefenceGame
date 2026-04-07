@@ -1,5 +1,9 @@
+#include <string>
+#include <fstream>
 #include <iostream>
+#include <sstream>
 
+#include <cJSON.h>
 #include <SDL3/SDL.h>
 #include <SDL3//SDL_main.h>
 #include <SDL3_image/SDL_image.h>
@@ -7,8 +11,61 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_gfxPrimitives.h>
 
+void test_json()
+{
+	std::ifstream file("test.json");
+	if (!file.is_open())
+	{
+		std::cout << "无法打开文件" << std::endl;
+		return;
+	}
+	std::stringstream str_stream;
+	str_stream << file.rdbuf();
+	file.close();
+
+	cJSON* json_root = cJSON_Parse(str_stream.str().c_str());
+	//std::cout << "JSON内容: " << cJSON_Print(json_root) << std::endl;
+	cJSON* json_name = cJSON_GetObjectItem(json_root, "name");
+	cJSON* json_age = cJSON_GetObjectItem(json_root, "age");
+	cJSON* json_pets = cJSON_GetObjectItem(json_root, "pets");
+
+	std::cout << json_name->string << ": " << json_name->valuestring << std::endl;
+	std::cout << json_age->string << ": " << json_age->valueint << std::endl;
+
+	std::cout << json_pets->string << ": " << std::endl;
+
+	cJSON* json_item = nullptr;
+	cJSON_ArrayForEach(json_item, json_pets)
+	{
+		std::cout << "\t" << json_item->valuestring << std::endl;
+	}
+}
+void test_csv()
+{
+	std::ifstream file("test.csv");
+	if(!file.is_open())
+	{
+		std::cout << "无法打开文件" << std::endl;
+		return;
+	}
+	std::string str_line;
+	while (std::getline(file, str_line))
+	{
+		std::string str_grid;
+		std::stringstream str_stream(str_line);
+		while (std::getline(str_stream, str_grid, ','))
+		{
+			std::cout << str_grid << " ";
+		}
+		std::cout << std::endl;
+	}
+	file.close();
+}
 int main(int argc, char* argv[])
 {
+	test_json();
+	std::cout << "==============================" << std::endl;
+	test_csv();
 	//SDL_Init(SDL_INIT_EVERYTHING);
 	//IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 	//Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3);
@@ -76,7 +133,7 @@ int main(int argc, char* argv[])
 			//为了保持60帧每秒的帧率，如果当前帧的时间小于1/60秒(1000.0/60毫秒)，就让程序等待一段时间
 			SDL_Delay(static_cast<Uint32>(1000.0 / 60 - delta_time * 1000));
 		}
-		std::cout << "帧时间: " << delta_time * 1000 << " ms" << std::endl;
+		//std::cout << "帧时间: " << delta_time * 1000 << " ms" << std::endl;
 		//处理数据
 		rect_img.x = pos_cursor.x - suf_img->w / 2;
 		rect_img.y = pos_cursor.y - suf_img->h / 2;
