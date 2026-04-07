@@ -121,14 +121,21 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\thridParty\SDL3-3.4.4\include;..\thridParty\SDL3_gfx-1.0.1;..\thridParty\SDL3_image-3.4.0\include;..\thridParty\SDL3_mixer-3.2.0\include;..\thridParty\SDL3_ttf-3.2.2\include;..\thridParty\cJSON\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\thridParty\SDL3-3.4.4\lib\x64;..\thridParty\SDL3_gfx-1.0.1\x64\Release;..\thridParty\SDL3_image-3.4.0\lib\x64;..\thridParty\SDL3_mixer-3.2.0\lib\x64;..\thridParty\SDL3_ttf-3.2.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_gfx.lib;SDL3_image.lib;SDL3_mixer.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game_manager.h" />
+    <ClInclude Include="manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
