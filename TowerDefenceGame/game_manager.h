@@ -12,7 +12,34 @@ class GameManager : public Manager<GameManager>
 {
 	friend class Manager<GameManager>;
 public:
-	
+	int run(int argc, char** argv)
+	{
+		Uint64 last_counter = SDL_GetPerformanceCounter();
+		Uint64 counter_freq = SDL_GetPerformanceFrequency();
+
+		while (!is_quit)
+		{
+			while (SDL_PollEvent(&event))
+			{
+				on_input();
+			}
+			Uint64 current_counter = SDL_GetPerformanceCounter();
+			double delta = static_cast<double>(current_counter - last_counter) / (counter_freq);
+			if (delta * 1000 < 1000.0 / 60)
+			{
+				SDL_Delay(static_cast<Uint32>(1000.0 / 60 - delta * 1000));
+			}
+			on_update(delta);
+			
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+			SDL_RenderClear(renderer);
+
+			on_render();
+
+			SDL_RenderPresent(renderer);
+		}
+		return 0;
+	}
 protected:
 	GameManager()
 	{
@@ -40,8 +67,23 @@ protected:
 	GameManager& operator=(const GameManager&) = delete;
 
 private:
+	SDL_Event event;
+	bool is_quit = false;
+
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+private:
+	void on_input()
+	{
+
+	}
+	void on_update(double delta)
+	{
+
+	}
+	void on_render()
+	{
+	}
 	void init_assert(bool flag, const char* err_msg)
 	{
 		if (flag) return;
