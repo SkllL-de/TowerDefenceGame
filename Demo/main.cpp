@@ -90,6 +90,11 @@ int main(int argc, char* argv[])
 	SDL_Texture* tex_text = SDL_CreateTextureFromSurface(renderer, suf_text);//将表面转换为纹理，得到一个纹理
 
 	//音频
+	SDL_AudioSpec audio_spec = {
+		.format = SDL_AUDIO_S16,
+		.channels = 2,
+		.freq = 44100
+	};
 	MIX_Mixer* mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);//创建一个混音器设备
 	MIX_Audio* music = MIX_LoadAudio(mixer, "music.mp3", true);//加载音频文件到内存中，得到一个音频
 	//音频的属性集options
