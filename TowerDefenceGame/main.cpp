@@ -1,13 +1,8 @@
 #include <iostream>
-#include "manager.h"
 #include "game_manager.h"
 //Manager* Manager::manager = nullptr;
 
-int main()
+int main(int argc, char** argv)
 {
-	GameManager* instance = GameManager::instance();
-
-	std::cout << "Hello, World!" << std::endl;
-
-	return 0;
+	return GameManager::instance()->run(argc, argv);
 }
