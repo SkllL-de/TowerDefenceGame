@@ -60,9 +60,17 @@ protected:
 		renderer = SDL_CreateRendererWithProperties(props);
 		init_assert(renderer, "创建渲染器失败！");
 	}
+	~GameManager()
+	{
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
 
+		TTF_Quit();
+		MIX_Quit();
+		SDL_Quit();
+	}
 	//GameManager() = default;
-	~GameManager() = default;
+	//~GameManager() = default;
 	GameManager(const GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
 
