@@ -2,13 +2,17 @@
 #define _MAP_H_
 
 #include "tile.h"
+#include "route.h"
 #include <SDL3/SDL.h>
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <unordered_map>
 
 class Map
 {
+public:
+	typedef std::unordered_map<int, Route> SpwanerRoutePool;
 public:
 	Map() = default;
 	~Map() = default;
@@ -69,6 +73,7 @@ public:
 private:
 	TileMap tile_map;
 	SDL_Point idx_home = { 0 };//防守目标点索引坐标
+	SpwanerRoutePool spwaner_route_pool;//键：0对应防守目标点，正整数对应各个怪物刷新点
 private:
 	std::string trim_str(const std::string& str)
 	{
@@ -115,13 +120,17 @@ private:
 			for (int x = 0; x < get_height(); x++)
 			{
 				const Tile& tile = tile_map[y][x];
-				if (tile.special_flag < 0)
+				if (tile.special_flag < 0)//非特殊目标点
 					continue;
 
-				if (tile.special_flag == 0)
+				if (tile.special_flag == 0)//防守目标点
 				{
 					idx_home.x = x;
 					idx_home.y = y;
+				}
+				else//tile.special_flaf > 0:怪物刷新点
+				{
+					spwaner_route_pool[tile.special_flag] = Route(tile_map, { x, y });
 				}
 			}
 		}
