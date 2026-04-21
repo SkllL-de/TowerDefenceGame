@@ -16,7 +16,9 @@ struct Tile
 		Right
 	};
 	int terrain = 0;
+	//从0开始，地形像素图的索引
 	int decoration = -1;
+	//-1:无装饰，0及以后：装饰像素图的索引
 	int special_flag = -1;
 	//-1: 无特殊，0：防守目标点，1-10：敌人出生点
 	bool has_tower = false;
