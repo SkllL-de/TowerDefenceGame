@@ -19,6 +19,9 @@
     <ClInclude Include="wave.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="enemy_type.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -29,6 +32,9 @@
     </Filter>
     <Filter Include="源文件">
       <UniqueIdentifier>{98d7bee5-bd9f-4699-991b-9d677b8403fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\enemy">
+      <UniqueIdentifier>{23379848-3d02-425b-99b9-ffa367bb0d24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
