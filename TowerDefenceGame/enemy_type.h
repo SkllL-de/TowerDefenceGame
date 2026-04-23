@@ -1,7 +1,7 @@
 #ifndef _ENEMY_TYPE_H_
 #define _ENEMY_TYPE_H_
 
-enum class Enemy
+enum class EnemyType
 {
 	Slim,
 	KingSlim,
