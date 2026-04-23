@@ -134,6 +134,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config_manager.h" />
     <ClInclude Include="game_manager.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="map.h" />
