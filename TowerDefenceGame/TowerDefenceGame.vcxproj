@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enemy_type.h" />
+    <ClInclude Include="config_manager.h" />
     <ClInclude Include="game_manager.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="map.h" />
