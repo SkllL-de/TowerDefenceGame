@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_MANAGER_H_
-#define _RESOURCE_MANAGER_H_
+#ifndef _RESOURCES_MANAGER_H_
+#define _RESOURCES_MANAGER_H_
 
 #include "manager.h"
 
@@ -87,9 +87,9 @@ enum class ResID
 
 	Font_Main
 };
-class ResourceManager : public Manager<ResourceManager>
+class ResourcesManager : public Manager<ResourcesManager>
 {
-	friend class Manager<ResourceManager>;
+	friend class Manager<ResourcesManager>;
 
 public:
 	typedef std::unordered_map<ResID, TTF_Font*> FontPool;
@@ -205,8 +205,8 @@ public:
 		return texture_pool;
 	}
 protected:
-	ResourceManager() = default;
-	~ResourceManager() = default;
+	ResourcesManager() = default;
+	~ResourcesManager() = default;
 
 private:
 	FontPool font_pool;
@@ -215,4 +215,4 @@ private:
 };
 
 
-#endif // _RESOURCE_MANAGER_H_
+#endif // _RESOURCES_MANAGER_H_
