@@ -1,7 +1,9 @@
-#ifndef _GAME_MANAGER_H_
+﻿#ifndef _GAME_MANAGER_H_
 #define _GAME_MANAGER_H_
 
 #include "manager.h"
+#include "config_manager.h"
+#include "resources_manager.h"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_mixer/SDL_mixer.h>
