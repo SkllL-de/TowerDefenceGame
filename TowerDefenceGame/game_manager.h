@@ -53,7 +53,13 @@ protected:
 
 		SDL_SetHint(SDL_HINT_IME_IMPLEMENTED_UI, "0");//使用系统默认的输入法界面
 
-		window = SDL_CreateWindow("村庄保卫战", 1280, 720, 0);
+		ConfigManager* config = ConfigManager::instance();
+
+		init_assert(config->map.load("map.csv"), "加载游戏地图失败");//初始化了config的Map map
+		init_assert(config->load_level_config("level.json"), "加载关卡配置失败");//初始化了config的vector<Wave> wave_list
+		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config的所有Struct XxxxxTemplate
+
+		window = SDL_CreateWindow(config->basic_template.window_title.c_str(), config->basic_template.window_width, config->basic_template.window_height, 0);
 		init_assert(window, "创建游戏窗口失败！");
 
 		SDL_PropertiesID props = SDL_CreateProperties();
@@ -61,6 +67,10 @@ protected:
 		SDL_SetNumberProperty(props, SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER, 1);//启用垂直同步
 		renderer = SDL_CreateRendererWithProperties(props);
 		init_assert(renderer, "创建渲染器失败！");
+
+		init_assert(ResourcesManager::instance()->load_from_file(renderer, mixer), "加载游戏资源失败！");
+
+		init_assert(generate_tile_map_texture(), "生成瓦片地图失败");
 	}
 	~GameManager()
 	{
@@ -83,6 +93,13 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 private:
+	void init_assert(bool flag, const char* err_msg)
+	{
+		if (flag) return;
+
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", err_msg, window);
+		exit(-1);
+	}
 	void on_input()
 	{
 
@@ -93,13 +110,18 @@ private:
 	}
 	void on_render()
 	{
-	}
-	void init_assert(bool flag, const char* err_msg)
-	{
-		if (flag) return;
 
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", err_msg, window);
-		exit(-1);
+	}
+	
+	bool generate_tile_map_texture()
+	{
+		const Map& map = ConfigManager::instance()->map;//这里的map理应是已经load("map.csv")的，不会在此处修改，所以是const类型的
+		const TileMap& tile_map = map.get_tile_map();//const只获取tile_map，不修改它
+		SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;//rect_tile_map是整张地图纹理在**窗口**上渲染的尺寸和位置，这里的引用&是为了修改
+		SDL_Texture* tex_tile_set = ResourcesManager::instance()->get_texture_pool().find(ResID::Tex_Tileset)->second;
+
+		float width_tex_tile_set, height_tex_tile_set;
+		SDL_GetTextureSize(tex_tile_set, &width_tex_tile_set, &height_tex_tile_set);//获取resources文件里的tileset长宽
 	}
 };
 #endif // !_GAME_MANAGER_H_
