@@ -12,7 +12,7 @@
 class Map
 {
 public:
-	typedef std::unordered_map<int, Route> SpwanerRoutePool;
+	typedef std::unordered_map<int, Route> SpawnerRoutePool;
 public:
 	Map() = default;
 	~Map() = default;
@@ -43,7 +43,7 @@ public:
 				idx_x++;
 				tile_map_temp[idx_y].emplace_back();
 				Tile& tile = tile_map_temp[idx_y].back();
-				load_tile_from_string(tile, str_line);
+				load_tile_from_string(tile, str_tile);
 			}
 		}
 		file.close();
@@ -52,6 +52,9 @@ public:
 			return false;
 
 		tile_map = tile_map_temp;
+
+		generate_map_cache();
+
 		return true;
 	}
 
@@ -81,9 +84,9 @@ public:
 		return idx_home;
 	}
 
-	const SpwanerRoutePool get_spwaner_route_pool() const
+	const SpawnerRoutePool get_spawner_route_pool() const
 	{
-		return spwaner_route_pool;
+		return spawner_route_pool;
 	}
 
 	void place_tower(const SDL_Point& idx_tile)
@@ -94,7 +97,7 @@ public:
 private:
 	TileMap tile_map;
 	SDL_Point idx_home = { 0 };//防守目标点索引坐标
-	SpwanerRoutePool spwaner_route_pool;//键：0对应防守目标点，正整数对应各个怪物刷新点
+	SpawnerRoutePool spawner_route_pool;//键：0对应防守目标点，正整数对应各个怪物刷新点
 private:
 	std::string trim_str(const std::string& str)
 	{
@@ -130,15 +133,15 @@ private:
 		}
 		tile.terrain = (values.size() < 1 || values[0] < 0) ? 0 : values[0];
 		tile.decoration = (values.size() < 2 || values[1] < -1) ? -1 : values[1];
-		tile.direction = (Tile::Direction)((values.size() < 3 || values[3] < 0 || values[3] > 4) ? 0 : values[2]);
+		tile.direction = (Tile::Direction)((values.size() < 3 || values[2] < 0) ? 0 : values[2]);
 		tile.special_flag = values.size() <= 3 ? -1 : values[3];
 	}
 
 	void generate_map_cache()
 	{
-		for (int y = 0; y < get_width(); y++)
+		for (int y = 0; y < get_height(); y++)
 		{
-			for (int x = 0; x < get_height(); x++)
+			for (int x = 0; x < get_width(); x++)
 			{
 				const Tile& tile = tile_map[y][x];
 				if (tile.special_flag < 0)//非特殊目标点
@@ -151,7 +154,7 @@ private:
 				}
 				else//tile.special_flaf > 0:怪物刷新点
 				{
-					spwaner_route_pool[tile.special_flag] = Route(tile_map, { x, y });
+					spawner_route_pool[tile.special_flag] = Route(tile_map, { x, y });
 				}
 			}
 		}
