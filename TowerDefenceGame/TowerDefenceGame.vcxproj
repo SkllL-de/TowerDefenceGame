@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\thridParty\cJSON\cJSON.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
