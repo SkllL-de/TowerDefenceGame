@@ -95,7 +95,7 @@ public:
 	}
 
 private:
-	TileMap tile_map;
+	TileMap tile_map;//调用load时初始化，根据map.csv创建瓦片地图
 	SDL_Point idx_home = { 0 };//防守目标点索引坐标
 	SpawnerRoutePool spawner_route_pool;//键：0对应防守目标点，正整数对应各个怪物刷新点
 private:
