@@ -61,7 +61,7 @@ public:
 
 	bool is_game_win = true;//gameover时房子生命值>0
 	bool is_game_over = false;//所有波次已经结束,所有敌人已经被消灭
-	SDL_Rect rect_tile_map = { 0 };
+	SDL_FRect rect_tile_map = { 0 };//在game_manager的generate_tile_map_texture()中被赋值，在on_render()被使用
 
 	BasicTemplate basic_template;
 
