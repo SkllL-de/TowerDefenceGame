@@ -34,6 +34,9 @@
     <ClInclude Include="animation.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
