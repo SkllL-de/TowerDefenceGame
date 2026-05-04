@@ -85,7 +85,7 @@ public:
 		rect_dst.x = pos_dst.x, rect_dst.y = pos_dst.y;
 		rect_dst.w = width_frame, rect_dst.h = height_frame;
 
-		SDL_RenderTexture(renderer, texture, &rect_src_list[idx_frame], &rect_dst);
+		SDL_RenderTextureRotated(renderer, texture, &rect_src_list[idx_frame], &rect_dst, angle, nullptr, SDL_FlipMode::SDL_FLIP_NONE);
 	}
 
 private:
