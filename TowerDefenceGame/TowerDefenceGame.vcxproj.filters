@@ -25,8 +25,35 @@
     <ClInclude Include="enemy_type.h">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="resource_manager.h">
+    <ClInclude Include="resources_manager.h">
       <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="slim_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="king_slim_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="goblin_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="goblin_priest_enemy.h">
+      <Filter>头文件\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -42,10 +69,16 @@
     <Filter Include="头文件\enemy">
       <UniqueIdentifier>{23379848-3d02-425b-99b9-ffa367bb0d24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\cJSON">
+      <UniqueIdentifier>{d781ae43-3146-4b31-a207-5b0cf074a376}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thridParty\cJSON\cJSON.c">
+      <Filter>源文件\cJSON</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

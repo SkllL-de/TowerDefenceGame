@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_MANAGER_H_
-#define _RESOURCE_MANAGER_H_
+#ifndef _RESOURCES_MANAGER_H_
+#define _RESOURCES_MANAGER_H_
 
 #include "manager.h"
 
@@ -58,7 +58,7 @@ enum class ResID
 	Tex_UICoin,
 	Tex_UIGameOverBar,
 	Tex_UIWinText,
-	Tex_UILoseText,
+	Tex_UILossText,
 
 	Sound_ArrowFire_1,
 	Sound_ArrowFire_2,
@@ -81,15 +81,15 @@ enum class ResID
 	Sound_TowerLevelUp,
 
 	Sound_Win,
-	Sound_Lose,
+	Sound_Loss,
 
 	Music_BGM,
 
 	Font_Main
 };
-class ResourceManager : public Manager<ResourceManager>
+class ResourcesManager : public Manager<ResourcesManager>
 {
-	friend class Manager<ResourceManager>;
+	friend class Manager<ResourcesManager>;
 
 public:
 	typedef std::unordered_map<ResID, TTF_Font*> FontPool;
@@ -148,7 +148,7 @@ public:
 		texture_pool[ResID::Tex_UICoin] = IMG_LoadTexture(renderer, "resources/ui_coin.png");
 		texture_pool[ResID::Tex_UIGameOverBar] = IMG_LoadTexture(renderer, "resources/ui_game_over_bar.png");
 		texture_pool[ResID::Tex_UIWinText] = IMG_LoadTexture(renderer, "resources/ui_win_text.png");
-		texture_pool[ResID::Tex_UILoseText] = IMG_LoadTexture(renderer, "resources/ui_lose_text.png");
+		texture_pool[ResID::Tex_UILossText] = IMG_LoadTexture(renderer, "resources/ui_loss_text.png");
 
 		for (const auto& pair : texture_pool)
 			if (!pair.second) return false;
@@ -174,7 +174,7 @@ public:
 		audio_pool[ResID::Sound_TowerLevelUp] = MIX_LoadAudio(mixer, "resources/sound_tower_level_up.mp3", true);
 
 		audio_pool[ResID::Sound_Win] = MIX_LoadAudio(mixer, "resources/sound_win.wav", true);
-		audio_pool[ResID::Sound_Lose] = MIX_LoadAudio(mixer, "resources/sound_lose.mp3", true);
+		audio_pool[ResID::Sound_Loss] = MIX_LoadAudio(mixer, "resources/sound_loss.mp3", true);
 
 		audio_pool[ResID::Music_BGM] = MIX_LoadAudio(mixer, "resources/music_bgm.mp3", false);
 
@@ -205,8 +205,8 @@ public:
 		return texture_pool;
 	}
 protected:
-	ResourceManager() = default;
-	~ResourceManager() = default;
+	ResourcesManager() = default;
+	~ResourcesManager() = default;
 
 private:
 	FontPool font_pool;
@@ -215,4 +215,4 @@ private:
 };
 
 
-#endif // _RESOURCE_MANAGER_H_
+#endif // _RESOURCES_MANAGER_H_
