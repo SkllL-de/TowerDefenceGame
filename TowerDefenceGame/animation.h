@@ -38,7 +38,7 @@ public:
 		idx_frame = 0;
 	}
 
-	void set_frame_data(SDL_Texture* texture, int num_h, int num_v, std::vector<int>& idx_list)
+	void set_frame_data(SDL_Texture* texture, int num_h, int num_v, const std::vector<int>& idx_list)
 	{
 		float width_tex, height_tex;
 
