@@ -74,7 +74,7 @@ public:
 		return tile_map.size();
 	}
 
-	const TileMap get_tile_map() const
+	const TileMap& get_tile_map() const
 	{
 		return tile_map;
 	}
@@ -88,12 +88,11 @@ public:
 	{
 		return spawner_route_pool;
 	}
-
+	
 	void place_tower(const SDL_Point& idx_tile)
 	{
 		tile_map[idx_tile.y][idx_tile.x].has_tower = true;
 	}
-
 private:
 	TileMap tile_map;//调用load时初始化，根据map.csv创建瓦片地图
 	SDL_Point idx_home = { 0 };//防守目标点索引坐标
