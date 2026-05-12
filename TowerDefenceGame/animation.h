@@ -7,12 +7,12 @@
 #include <vector>
 #include <functional>
 
-class Animaiton
+class Animation
 {
 public:
 	typedef std::function<void()> PlayCallback;
 public:
-	Animaiton()
+	Animation()
 	{
 		timer.set_one_shot(false);
 		timer.set_on_timeout(
@@ -29,7 +29,7 @@ public:
 		);
 	}
 
-	~Animaiton() = default;
+	~Animation() = default;
 
 	void reset()
 	{
