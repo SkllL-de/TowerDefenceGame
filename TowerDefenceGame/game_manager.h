@@ -49,7 +49,7 @@ protected:
 		init_assert(MIX_Init(), "SDL_mixer初始化失败！");
 		init_assert(TTF_Init(), "SDL_ttf初始化失败！");
 
-		mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+		//mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
 
 		SDL_SetHint(SDL_HINT_IME_IMPLEMENTED_UI, "0");//使用系统默认的输入法界面
 
@@ -66,14 +66,16 @@ protected:
 		SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, window);//将窗口指针设置到属性中，供渲染器创建时使用
 		SDL_SetNumberProperty(props, SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER, 1);//启用垂直同步
 		renderer = SDL_CreateRendererWithProperties(props);
+		SDL_DestroyProperties(props);
 		init_assert(renderer, "创建渲染器失败！");
 
-		init_assert(ResourcesManager::instance()->load_from_file(renderer, mixer), "加载游戏资源失败！");
+		init_assert(ResourcesManager::instance()->load_from_file(renderer), "加载游戏资源失败！");
 
 		init_assert(generate_tile_map_texture(), "生成瓦片地图失败");//初始化config_manager.h内置的SDL_FRect rect_tile_map
 	}
 	~GameManager()
 	{
+		//MIX_DestroyMixer(mixer);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 
@@ -92,7 +94,7 @@ private:
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	MIX_Mixer* mixer = nullptr;
+	//MIX_Mixer* mixer = nullptr;
 
 	SDL_Texture* tex_tile_map = nullptr;//永久保存整张地图纹理的核心纹理对象
 private:
