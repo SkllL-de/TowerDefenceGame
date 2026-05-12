@@ -5,10 +5,10 @@
 #include "config_manager.h"
 #include "resources_manager.h"
 
-class SlimEnemy : public Enemy
+class SkeletonEnemy : public Enemy
 {
 public:
-	SlimEnemy()
+	SkeletonEnemy()
 	{
 		static const ResourcesManager::TexturePool& texture_pool
 			= ResourcesManager::instance()->get_texture_pool();
@@ -53,7 +53,7 @@ public:
 
 	}
 
-	~SlimEnemy() = default;
+	~SkeletonEnemy() = default;
 
 };
 
