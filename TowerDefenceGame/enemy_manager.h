@@ -34,13 +34,11 @@ public:
 	}
 
 protected:
-	EnemyManager()
-	{
-
-	}
+	EnemyManager() = default;
 	~EnemyManager()
 	{
-
+		for (Enemy* enemy : enemy_list)
+			delete enemy;
 	}
 
 private:
