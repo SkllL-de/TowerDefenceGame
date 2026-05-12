@@ -55,6 +55,15 @@
     <ClInclude Include="goblin_priest_enemy.h">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="enemy_manager.h">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="home_manager.h">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="audio_manager.h">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -74,11 +83,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\thridParty\cJSON\cJSON.c">
       <Filter>源文件\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
