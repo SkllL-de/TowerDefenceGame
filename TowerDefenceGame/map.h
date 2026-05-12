@@ -151,7 +151,7 @@ private:
 					idx_home.x = x;
 					idx_home.y = y;
 				}
-				else//tile.special_flaf > 0:怪物刷新点
+				else//tile.special_flag > 0:怪物刷新点
 				{
 					spawner_route_pool[tile.special_flag] = Route(tile_map, { x, y });
 				}
