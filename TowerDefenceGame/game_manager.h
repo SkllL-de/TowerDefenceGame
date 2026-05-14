@@ -3,6 +3,8 @@
 
 #include "manager.h"
 #include "config_manager.h"
+#include "enemy_manager.h"
+#include "wave_manager.h"
 #include "resources_manager.h"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
@@ -111,6 +113,13 @@ private:
 	}
 	void on_update(double delta)
 	{
+		static ConfigManager* instance = ConfigManager::instance();
+
+		if (!instance->is_game_over)
+		{
+			WaveManager::instance()->on_update(delta);
+			EnemyManager::instance()->on_update(delta);
+		}
 
 	}
 	void on_render()
@@ -119,6 +128,8 @@ private:
 		static SDL_FRect& rect_dst = instance->rect_tile_map;
 
 		SDL_RenderTexture(renderer, tex_tile_map, nullptr, &rect_dst);
+
+		EnemyManager::instance()->on_render(renderer);
 	}
 	
 	bool generate_tile_map_texture()
