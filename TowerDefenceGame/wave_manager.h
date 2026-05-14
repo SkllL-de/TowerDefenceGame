@@ -38,7 +38,7 @@ public:
 			else
 			{
 				idx_spawn_event = 0;
-				is_wave_started = true;
+				is_wave_started = false;
 				is_spawned_last_enemy = false;
 
 				const Wave& wave = instance->wave_list[idx_wave];
@@ -58,7 +58,7 @@ protected:
 			[&]()
 			{
 				is_wave_started = true;
-				timer_spawn_enemy.set_wait_time(wave_list[idx_wave].spwan_event_list[0].interval);
+				timer_spawn_enemy.set_wait_time(wave_list[idx_wave].spawn_event_list[0].interval);
 				timer_spawn_enemy.restart();
 			}
 		);
@@ -67,7 +67,7 @@ protected:
 		timer_spawn_enemy.set_on_timeout(
 			[&]()
 			{
-				const std::vector<Wave::SpwanEvent>& spawn_event_list = wave_list[idx_wave].spwan_event_list;
+				const std::vector<Wave::SpwanEvent>& spawn_event_list = wave_list[idx_wave].spawn_event_list;
 				const Wave::SpwanEvent& spawn_event = spawn_event_list[idx_spawn_event];
 
 				EnemyManager::instance()->spawn_enemy(spawn_event.enemy_type, spawn_event.spwan_point);

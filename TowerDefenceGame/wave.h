@@ -16,7 +16,7 @@ struct Wave
 
 	double rewards = 0;//每波结束的奖励
 	double interval = 0;//波次之间的间隔
-	std::vector<SpwanEvent> spwan_event_list;
+	std::vector<SpwanEvent> spawn_event_list;
 };
 
 #endif // !_WAVE_H_
