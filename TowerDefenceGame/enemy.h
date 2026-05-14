@@ -95,7 +95,7 @@ public:
 
 			rect.w = size_hp_bar.x;
 			SDL_SetRenderDrawColor(renderer, color_border.r, color_border.g, color_border.b, color_border.a);
-			SDL_RenderFillRect(renderer, &rect);
+			SDL_RenderRect(renderer, &rect);
 		}
 	}
 
