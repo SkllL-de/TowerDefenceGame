@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="audio_manager.h" />
+    <ClInclude Include="coin_manager.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_manager.h" />
     <ClInclude Include="enemy_type.h" />

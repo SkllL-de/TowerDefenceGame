@@ -67,6 +67,9 @@
     <ClInclude Include="wave_manager.h">
       <Filter>头文件\manager</Filter>
     </ClInclude>
+    <ClInclude Include="coin_manager.h">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
