@@ -53,8 +53,8 @@ public:
 			SDL_FRect& rect_src = rect_src_list[i];
 
 			rect_src.x = (idx % num_h) * width_frame;
-			rect_src.y = (idx / num_v) * height_frame;
-			rect_src.w = width_tex, rect_src.h = height_tex;
+			rect_src.y = (idx / num_h) * height_frame;
+			rect_src.w = width_frame, rect_src.h = height_frame;
 		}
 	}
 
