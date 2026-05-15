@@ -29,6 +29,7 @@ public:
 			}
 			Uint64 current_counter = SDL_GetPerformanceCounter();
 			double delta = static_cast<double>(current_counter - last_counter) / (counter_freq);
+			last_counter = current_counter;
 			if (delta * 1000 < 1000.0 / 60)
 			{
 				SDL_Delay(static_cast<Uint32>(1000.0 / 60 - delta * 1000));
