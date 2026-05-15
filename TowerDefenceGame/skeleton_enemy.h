@@ -46,7 +46,7 @@ public:
 		reward_ratio = skeleton_template.reward_ratio;
 		recover_interval = skeleton_template.recover_interval;
 		recover_range = skeleton_template.recover_range;
-		recover_interval = skeleton_template.recover_intensity;
+		recover_intensity = skeleton_template.recover_intensity;
 
 		size.x = 48, size.y = 48;
 		hp = max_hp, speed = max_speed;
