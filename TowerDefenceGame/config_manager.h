@@ -126,8 +126,8 @@ public:
 					if (json_spwan_event->type != cJSON_Object)
 						continue;
 
-					wave.spwan_event_list.emplace_back();
-					Wave::SpwanEvent& spwan_event = wave.spwan_event_list.back();
+					wave.spawn_event_list.emplace_back();
+					Wave::SpwanEvent& spwan_event = wave.spawn_event_list.back();
 
 					cJSON* json_spwan_event_interval = cJSON_GetObjectItem(json_spwan_event, "interval");
 					if (json_spwan_event_interval && json_spwan_event_interval->type == cJSON_Number)
@@ -155,7 +155,7 @@ public:
 					}
 				}
 				//如果控制添加spwan_event_list的cJSON_ForEach循环后，spwan_event仍为空，则删除在wave_list数组末尾新增的wave格
-				if (wave.spwan_event_list.empty())
+				if (wave.spawn_event_list.empty())
 					wave_list.pop_back();
 			}
 		}
