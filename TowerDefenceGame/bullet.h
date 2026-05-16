@@ -28,27 +28,27 @@ public:
 		this->position = position;
 	}
 
-	void set_damage()
+	void set_damage(double damage)
 	{
 		this->damage = damage;
 	}
 
-	const Vector2& get_size()
+	const Vector2& get_size() const
 	{
 		return size;
 	}
 
-	const Vector2& get_position()
+	const Vector2& get_position() const
 	{
 		return position;
 	}
 
-	double get_damage()
+	double get_damage() const
 	{
 		return damage;
 	}
 
-	double get_damage_range()
+	double get_damage_range() const
 	{
 		return damage_range;
 	}
@@ -69,7 +69,7 @@ public:
 		is_collisional = false;
 	}
 
-	bool can_remove()
+	bool can_remove() const
 	{
 		return !is_valid;
 	}
