@@ -137,7 +137,7 @@ public:
 					if (json_spawn_event_point && json_spawn_event_point->type == cJSON_Number)
 						spawn_event.spawn_point = json_spawn_event_point->valueint;
 
-					cJSON* json_spawn_event_enemy_type = cJSON_GetObjectItem(json_spawn_event, "enemty");
+					cJSON* json_spawn_event_enemy_type = cJSON_GetObjectItem(json_spawn_event, "enemy");
 					if (json_spawn_event_enemy_type && json_spawn_event_enemy_type->type == cJSON_String)
 					{
 						const std::string str_enemy_type = json_spawn_event_enemy_type->valuestring;
@@ -201,11 +201,11 @@ public:
 		parse_tower_template(axeman_template, cJSON_GetObjectItem(json_tower, "axeman"));
 		parse_tower_template(gunner_template, cJSON_GetObjectItem(json_tower, "gunner"));
 
-		parse_enemy_template(slim_template, cJSON_GetObjectItem(json_tower, "slim"));
-		parse_enemy_template(king_slim_template, cJSON_GetObjectItem(json_tower, "king_slim"));
-		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_tower, "skeleton"));
-		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_tower, "goblin"));
-		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_tower, "goblin_priest"));
+		parse_enemy_template(slim_template, cJSON_GetObjectItem(json_enemy, "slim"));
+		parse_enemy_template(king_slim_template, cJSON_GetObjectItem(json_enemy, "king_slim"));
+		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
+		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
+		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_enemy, "goblin_priest"));
 
 		cJSON_Delete(json_root);
 		return true;
