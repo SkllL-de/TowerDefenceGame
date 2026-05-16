@@ -88,6 +88,12 @@
     <ClInclude Include="bullet_type.h">
       <Filter>头文件\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="tower.h">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="tower_type.h">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -107,6 +113,9 @@
     </Filter>
     <Filter Include="头文件\bullet">
       <UniqueIdentifier>{0ae77c60-5cfd-4647-9413-c5aa4c55cc37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\tower">
+      <UniqueIdentifier>{f2b67c7f-32bf-4f9e-a45a-ffe547f55633}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
