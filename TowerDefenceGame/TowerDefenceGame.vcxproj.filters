@@ -40,9 +40,6 @@
     <ClInclude Include="enemy.h">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="slim_enemy.h">
-      <Filter>头文件\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="king_slim_enemy.h">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
@@ -70,6 +67,12 @@
     <ClInclude Include="coin_manager.h">
       <Filter>头文件\manager</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="slim_enemy.h">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -86,6 +89,9 @@
     </Filter>
     <Filter Include="源文件\cJSON">
       <UniqueIdentifier>{d781ae43-3146-4b31-a207-5b0cf074a376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\bullet">
+      <UniqueIdentifier>{0ae77c60-5cfd-4647-9413-c5aa4c55cc37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
