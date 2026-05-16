@@ -67,10 +67,10 @@ protected:
 		timer_spawn_enemy.set_on_timeout(
 			[&]()
 			{
-				const std::vector<Wave::SpwanEvent>& spawn_event_list = wave_list[idx_wave].spawn_event_list;
-				const Wave::SpwanEvent& spawn_event = spawn_event_list[idx_spawn_event];
+				const std::vector<Wave::SpawnEvent>& spawn_event_list = wave_list[idx_wave].spawn_event_list;
+				const Wave::SpawnEvent& spawn_event = spawn_event_list[idx_spawn_event];
 
-				EnemyManager::instance()->spawn_enemy(spawn_event.enemy_type, spawn_event.spwan_point);
+				EnemyManager::instance()->spawn_enemy(spawn_event.enemy_type, spawn_event.spawn_point);
 
 				idx_spawn_event++;
 
