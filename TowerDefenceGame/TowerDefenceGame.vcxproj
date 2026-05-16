@@ -141,6 +141,8 @@
     <ClInclude Include="audio_manager.h" />
     <ClInclude Include="axe_bullet.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="bullet_manager.h" />
+    <ClInclude Include="bullet_type.h" />
     <ClInclude Include="coin_manager.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_manager.h" />
