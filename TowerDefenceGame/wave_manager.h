@@ -24,7 +24,7 @@ public:
 		else
 			timer_spawn_enemy.on_update(delta);
 
-		if (is_spawned_last_enemy && EnemyManager::instance()->check_cleard())//当前波次结束
+		if (is_spawned_last_enemy && EnemyManager::instance()->check_cleared())//当前波次结束
 		{
 			CoinManager::instance()->increase_coin(instance->wave_list[idx_wave].rewards);
 
@@ -86,7 +86,7 @@ protected:
 		);
 
 	}
-	~WaveManager(){}
+	~WaveManager() = default;
 
 private:
 	int idx_wave = 0;//当前是第几波

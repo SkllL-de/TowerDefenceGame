@@ -27,7 +27,7 @@ public:
 			enemy->on_update(delta);
 
 		process_home_collision();
-		process_bullet_collsion();
+		process_bullet_collision();
 
 		remove_invalid_enemy();
 	}
@@ -42,11 +42,11 @@ public:
 	{
 		static Vector2 position;
 		static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
-		static const Map::SpawnerRoutePool& spawn_route_pool
+		static const Map::SpawnerRoutePool& spawner_route_pool
 			= ConfigManager::instance()->map.get_spawner_route_pool();
 
-		const auto& itor = spawn_route_pool.find(idx_spawn_point);
-		if (itor == spawn_route_pool.end())
+		const auto& itor = spawner_route_pool.find(idx_spawn_point);
+		if (itor == spawner_route_pool.end())
 			return;
 
 		Enemy* enemy = nullptr;
@@ -100,7 +100,7 @@ public:
 		enemy_list.push_back(enemy);
 	}
 
-	bool check_cleard()
+	bool check_cleared()
 	{
 		return enemy_list.empty();
 	}
@@ -146,7 +146,7 @@ private:
 		}
 	}
 
-	void process_bullet_collsion()
+	void process_bullet_collision()
 	{
 
 	}
@@ -156,9 +156,9 @@ private:
 		enemy_list.erase(std::remove_if(enemy_list.begin(), enemy_list.end(),
 			[](const Enemy* enemy)
 			{
-				bool deleteable = enemy->can_remove();
-				if (deleteable) delete enemy;
-				return deleteable;
+				bool deletable = enemy->can_remove();
+				if (deletable) delete enemy;
+				return deletable;
 			}), enemy_list.end());
 	}
 };
