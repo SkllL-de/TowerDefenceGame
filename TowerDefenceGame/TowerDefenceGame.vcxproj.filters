@@ -73,6 +73,15 @@
     <ClInclude Include="slim_enemy.h">
       <Filter>头文件\manager</Filter>
     </ClInclude>
+    <ClInclude Include="arrow_bullet.h">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="axe_bullet.h">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="shell_bullet.h">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
