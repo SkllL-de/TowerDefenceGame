@@ -97,6 +97,15 @@
     <ClInclude Include="facing.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="archer_tower.h">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="axeman_tower.h">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="gunner_tower.h">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
