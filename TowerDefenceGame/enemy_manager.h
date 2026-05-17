@@ -105,6 +105,11 @@ public:
 		return enemy_list.empty();
 	}
 
+	EnemyList& get_enemy_list()
+	{
+		return enemy_list;
+	}
+
 protected:
 	EnemyManager() = default;
 	~EnemyManager()
