@@ -135,8 +135,10 @@ public:
 		{
 		case Archer:
 			instance->level_archer = instance->level_archer >= 9 ? 9 : instance->level_archer + 1;
+			break;
 		case Axeman:
-			instance->level_axeman = instance->level_axeman >= 9 ? 9 : instance->level_axeman + 1;
+			instance->level_axeman = instance->level_axeman >= 9 ? 9 : instance->level_axeman + 1;\
+			break;
 		case Gunner:
 			instance->level_gunner = instance->level_gunner >= 9 ? 9 : instance->level_gunner + 1;
 			break;
