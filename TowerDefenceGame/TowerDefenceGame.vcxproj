@@ -148,6 +148,7 @@
     <ClInclude Include="enemy_manager.h" />
     <ClInclude Include="enemy_type.h" />
     <ClInclude Include="config_manager.h" />
+    <ClInclude Include="facing.h" />
     <ClInclude Include="game_manager.h" />
     <ClInclude Include="goblin_enemy.h" />
     <ClInclude Include="goblin_priest_enemy.h" />

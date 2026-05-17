@@ -94,6 +94,9 @@
     <ClInclude Include="tower_type.h">
       <Filter>头文件\tower</Filter>
     </ClInclude>
+    <ClInclude Include="facing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
