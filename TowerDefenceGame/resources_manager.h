@@ -97,7 +97,7 @@ public:
 	typedef std::unordered_map<ResID, SDL_Texture*> TexturePool;
 
 public:
-	bool load_from_file(SDL_Renderer* renderer, MIX_Mixer* mixer)
+	bool load_from_file(SDL_Renderer* renderer)
 	{
 		texture_pool[ResID::Tex_Tileset] = IMG_LoadTexture(renderer, "resources/tileset.png");
 
@@ -153,30 +153,30 @@ public:
 		for (const auto& pair : texture_pool)
 			if (!pair.second) return false;
 
-		audio_pool[ResID::Sound_ArrowFire_1] = MIX_LoadAudio(mixer, "resources/sound_arrow_fire_1.mp3", true);
-		audio_pool[ResID::Sound_ArrowFire_2] = MIX_LoadAudio(mixer, "resources/sound_arrow_fire_2.mp3", true);
-		audio_pool[ResID::Sound_Axe_Fire] = MIX_LoadAudio(mixer, "resources/sound_axe_fire.wav", true);
-		audio_pool[ResID::Sound_Shell_Fire] = MIX_LoadAudio(mixer, "resources/sound_shell_fire.wav", true);
-		audio_pool[ResID::Sound_ArrowHit_1] = MIX_LoadAudio(mixer, "resources/sound_arrow_hit_1.mp3", true);
-		audio_pool[ResID::Sound_ArrowHit_2] = MIX_LoadAudio(mixer, "resources/sound_arrow_hit_2.mp3", true);
-		audio_pool[ResID::Sound_ArrowHit_3] = MIX_LoadAudio(mixer, "resources/sound_arrow_hit_3.mp3", true);
-		audio_pool[ResID::Sound_AxeHit_1] = MIX_LoadAudio(mixer, "resources/sound_axe_hit_1.mp3", true);
-		audio_pool[ResID::Sound_AxeHit_2] = MIX_LoadAudio(mixer, "resources/sound_axe_hit_2.mp3", true);
-		audio_pool[ResID::Sound_AxeHit_3] = MIX_LoadAudio(mixer, "resources/sound_axe_hit_3.mp3", true);
-		audio_pool[ResID::Sound_ShellHit] = MIX_LoadAudio(mixer, "resources/sound_shell_hit.mp3", true);
+		audio_pool[ResID::Sound_ArrowFire_1] = MIX_LoadAudio(NULL, "resources/sound_arrow_fire_1.mp3", true);
+		audio_pool[ResID::Sound_ArrowFire_2] = MIX_LoadAudio(NULL, "resources/sound_arrow_fire_2.mp3", true);
+		audio_pool[ResID::Sound_Axe_Fire] = MIX_LoadAudio(NULL, "resources/sound_axe_fire.wav", true);
+		audio_pool[ResID::Sound_Shell_Fire] = MIX_LoadAudio(NULL, "resources/sound_shell_fire.wav", true);
+		audio_pool[ResID::Sound_ArrowHit_1] = MIX_LoadAudio(NULL, "resources/sound_arrow_hit_1.mp3", true);
+		audio_pool[ResID::Sound_ArrowHit_2] = MIX_LoadAudio(NULL, "resources/sound_arrow_hit_2.mp3", true);
+		audio_pool[ResID::Sound_ArrowHit_3] = MIX_LoadAudio(NULL, "resources/sound_arrow_hit_3.mp3", true);
+		audio_pool[ResID::Sound_AxeHit_1] = MIX_LoadAudio(NULL, "resources/sound_axe_hit_1.mp3", true);
+		audio_pool[ResID::Sound_AxeHit_2] = MIX_LoadAudio(NULL, "resources/sound_axe_hit_2.mp3", true);
+		audio_pool[ResID::Sound_AxeHit_3] = MIX_LoadAudio(NULL, "resources/sound_axe_hit_3.mp3", true);
+		audio_pool[ResID::Sound_ShellHit] = MIX_LoadAudio(NULL, "resources/sound_shell_hit.mp3", true);
 
-		audio_pool[ResID::Sound_Flash] = MIX_LoadAudio(mixer, "resources/sound_flash.wav", true);
-		audio_pool[ResID::Sound_Impact] = MIX_LoadAudio(mixer, "resources/sound_impact.wav", true);
+		audio_pool[ResID::Sound_Flash] = MIX_LoadAudio(NULL, "resources/sound_flash.wav", true);
+		audio_pool[ResID::Sound_Impact] = MIX_LoadAudio(NULL, "resources/sound_impact.wav", true);
 
-		audio_pool[ResID::Sound_Coin] = MIX_LoadAudio(mixer, "resources/sound_coin.mp3", true);
-		audio_pool[ResID::Sound_HomeHurt] = MIX_LoadAudio(mixer, "resources/sound_home_hurt.wav", true);
-		audio_pool[ResID::Sound_PlaceTower] = MIX_LoadAudio(mixer, "resources/sound_place_tower.mp3", true);
-		audio_pool[ResID::Sound_TowerLevelUp] = MIX_LoadAudio(mixer, "resources/sound_tower_level_up.mp3", true);
+		audio_pool[ResID::Sound_Coin] = MIX_LoadAudio(NULL, "resources/sound_coin.mp3", true);
+		audio_pool[ResID::Sound_HomeHurt] = MIX_LoadAudio(NULL, "resources/sound_home_hurt.wav", true);
+		audio_pool[ResID::Sound_PlaceTower] = MIX_LoadAudio(NULL, "resources/sound_place_tower.mp3", true);
+		audio_pool[ResID::Sound_TowerLevelUp] = MIX_LoadAudio(NULL, "resources/sound_tower_level_up.mp3", true);
 
-		audio_pool[ResID::Sound_Win] = MIX_LoadAudio(mixer, "resources/sound_win.wav", true);
-		audio_pool[ResID::Sound_Loss] = MIX_LoadAudio(mixer, "resources/sound_loss.mp3", true);
+		audio_pool[ResID::Sound_Win] = MIX_LoadAudio(NULL, "resources/sound_win.wav", true);
+		audio_pool[ResID::Sound_Loss] = MIX_LoadAudio(NULL, "resources/sound_loss.mp3", true);
 
-		audio_pool[ResID::Music_BGM] = MIX_LoadAudio(mixer, "resources/music_bgm.mp3", false);
+		audio_pool[ResID::Music_BGM] = MIX_LoadAudio(NULL, "resources/music_bgm.mp3", false);
 
 		for (const auto& pair : audio_pool)
 			if (!pair.second) return false;

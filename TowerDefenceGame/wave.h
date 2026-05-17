@@ -7,16 +7,16 @@
 
 struct Wave
 {
-	struct SpwanEvent
+	struct SpawnEvent
 	{
 		double interval = 0;//波次内敌人生成间隔
-		int spwan_point = 1;
+		int spawn_point = 1;
 		EnemyType enemy_type = EnemyType::Slim;
 	};
 
 	double rewards = 0;//每波结束的奖励
 	double interval = 0;//波次之间的间隔
-	std::vector<SpwanEvent> spwan_event_list;
+	std::vector<SpawnEvent> spawn_event_list;
 };
 
 #endif // !_WAVE_H_

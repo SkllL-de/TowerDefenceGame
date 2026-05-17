@@ -5,10 +5,10 @@
 #include "config_manager.h"
 #include "resources_manager.h"
 
-class SlimEnemy : public Enemy
+class SkeletonEnemy : public Enemy
 {
 public:
-	SlimEnemy()
+	SkeletonEnemy()
 	{
 		static const ResourcesManager::TexturePool& texture_pool
 			= ResourcesManager::instance()->get_texture_pool();
@@ -46,14 +46,14 @@ public:
 		reward_ratio = skeleton_template.reward_ratio;
 		recover_interval = skeleton_template.recover_interval;
 		recover_range = skeleton_template.recover_range;
-		recover_interval = skeleton_template.recover_intensity;
+		recover_intensity = skeleton_template.recover_intensity;
 
 		size.x = 48, size.y = 48;
 		hp = max_hp, speed = max_speed;
 
 	}
 
-	~SlimEnemy() = default;
+	~SkeletonEnemy() = default;
 
 };
 

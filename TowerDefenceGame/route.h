@@ -20,7 +20,7 @@ public:
 
 		while (true)
 		{
-			if (idx_next.x >= height_map || idx_next.y >= width_map)//超出地图边界时，结束
+			if (idx_next.x >= width_map || idx_next.y >= height_map)//超出地图边界时，结束
 				break;
 
 			if (check_duplicate_idx(idx_next))//遇到重复单元格时，跳出

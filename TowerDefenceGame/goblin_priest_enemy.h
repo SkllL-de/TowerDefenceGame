@@ -5,10 +5,10 @@
 #include "config_manager.h"
 #include "resources_manager.h"
 
-class SlimEnemy : public Enemy
+class GoblinPriestEnemy : public Enemy
 {
 public:
-	SlimEnemy()
+	GoblinPriestEnemy()
 	{
 		static const ResourcesManager::TexturePool& texture_pool
 			= ResourcesManager::instance()->get_texture_pool();
@@ -51,9 +51,10 @@ public:
 		size.x = 48, size.y = 48;
 		hp = max_hp, speed = max_speed;
 
+		timer_skill.set_wait_time(recover_interval);
 	}
 
-	~SlimEnemy() = default;
+	~GoblinPriestEnemy() = default;
 
 };
 #endif // !_GOBLIN_PRIEST_ENEMY_H_

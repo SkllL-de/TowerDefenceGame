@@ -79,12 +79,12 @@ public:
 		return tile_map;
 	}
 
-	const SDL_Point get_idx_home() const
+	const SDL_Point& get_idx_home() const
 	{
 		return idx_home;
 	}
 
-	const SpawnerRoutePool get_spawner_route_pool() const
+	const SpawnerRoutePool& get_spawner_route_pool() const
 	{
 		return spawner_route_pool;
 	}
@@ -93,6 +93,7 @@ public:
 	{
 		tile_map[idx_tile.y][idx_tile.x].has_tower = true;
 	}
+
 private:
 	TileMap tile_map;//调用load时初始化，根据map.csv创建瓦片地图
 	SDL_Point idx_home = { 0 };//防守目标点索引坐标
@@ -151,7 +152,7 @@ private:
 					idx_home.x = x;
 					idx_home.y = y;
 				}
-				else//tile.special_flaf > 0:怪物刷新点
+				else//tile.special_flag > 0:怪物刷新点
 				{
 					spawner_route_pool[tile.special_flag] = Route(tile_map, { x, y });
 				}

@@ -50,24 +50,24 @@ public:
 		velocity.y = direction.y * speed * SIZE_TILE;	
 		//velocity = direction * speed * SIZE_TILE;
 
-		bool is_show_x_amina = abs(velocity.x) >= abs(velocity.y);
+		bool is_show_x_amin = abs(velocity.x) >= abs(velocity.y);
 
 		if (is_show_sketch)
 		{
-			if (is_show_x_amina)
-				anim_curent = velocity.x > 0 ? &anim_right_sketch : &anim_left_sketch;
+			if (is_show_x_amin)
+				anim_current = velocity.x > 0 ? &anim_right_sketch : &anim_left_sketch;
 			else
-				anim_curent = velocity.y > 0 ? &anim_down_sketch : &anim_up_sketch;
+				anim_current = velocity.y > 0 ? &anim_down_sketch : &anim_up_sketch;
 		}
 		else
 		{
-			if (is_show_x_amina)
-				anim_curent = velocity.x > 0 ? &anim_right : &anim_left;
+			if (is_show_x_amin)
+				anim_current = velocity.x > 0 ? &anim_right : &anim_left;
 			else
-				anim_curent = velocity.y > 0 ? &anim_down : &anim_up;
+				anim_current = velocity.y > 0 ? &anim_down : &anim_up;
 		}
 
-		anim_curent->on_update(delta);
+		anim_current->on_update(delta);
 	}
 
 	void on_render(SDL_Renderer* renderer)
@@ -82,7 +82,7 @@ public:
 		point.x = position.x - size.x / 2;
 		point.y = position.y - size.y / 2;
 
-		anim_curent->on_render(renderer, point);
+		anim_current->on_render(renderer, point);
 
 		if (hp < max_hp)
 		{
@@ -95,7 +95,7 @@ public:
 
 			rect.w = size_hp_bar.x;
 			SDL_SetRenderDrawColor(renderer, color_border.r, color_border.g, color_border.b, color_border.a);
-			SDL_RenderFillRect(renderer, &rect);
+			SDL_RenderRect(renderer, &rect);
 		}
 	}
 
@@ -115,7 +115,7 @@ public:
 	void decrease_hp(double val)
 	{
 		hp -= val;
-		if (hp < 0)
+		if (hp <= 0)
 		{
 			hp = 0;
 			is_valid = false;
@@ -188,12 +188,12 @@ public:
 		return recover_intensity;
 	}
 
-	bool can_move() const
+	bool can_remove() const
 	{
 		return !is_valid;
 	}
 
-	double get_orute_process() const
+	double get_route_process() const
 	{
 		if (route->get_idx_list().size() == 1)
 			return 1;
@@ -206,14 +206,14 @@ protected:
 
 	Timer timer_skill;//敌人技能定时器
 
-	Animaiton anim_up;
-	Animaiton anim_down;
-	Animaiton anim_left;
-	Animaiton anim_right;
-	Animaiton anim_up_sketch;
-	Animaiton anim_down_sketch;
-	Animaiton anim_left_sketch;
-	Animaiton anim_right_sketch;
+	Animation anim_up;
+	Animation anim_down;
+	Animation anim_left;
+	Animation anim_right;
+	Animation anim_up_sketch;
+	Animation anim_down_sketch;
+	Animation anim_left_sketch;
+	Animation anim_right_sketch;
 
 	double hp = 0;//实际血量
 	double max_hp = 0;//初始血量（最大血量）
@@ -235,7 +235,7 @@ private:
 	Timer timer_sketch;//负责控制修改is_show_sketchs,受击->闪(烁)白(光)
 	bool is_show_sketch = false;//是否展示受击描边动画
 
-	Animaiton* anim_curent = nullptr;//记录当前在画(上,下,左,右)哪一个动画
+	Animation* anim_current = nullptr;//记录当前在画(上,下,左,右)哪一个动画
 
 	SkillCallback on_skill_released;
 
@@ -256,7 +256,7 @@ private:
 			static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
 
 			position_target.x = rect_tile_map.x + point.x * SIZE_TILE + SIZE_TILE / 2;//下一个要走的目标点的位置.x = 地图左上角.x + 当前坐标点.x * SIZE_TILE + SIZE_TILE/2（到中心点）
-			position_target.y = rect_tile_map.y + point.y * SIZE_TILE + SIZE_TILE / 2;//下一个要走的目标点的位置.x = 地图左上角.y + 当前坐标点.y * SIZE_TILE
+			position_target.y = rect_tile_map.y + point.y * SIZE_TILE + SIZE_TILE / 2;//下一个要走的目标点的位置.x = 地图左上角.y + 当前坐标点.y * SIZE_TILE + SIZE_TILE/2
 		}
 	}
 };

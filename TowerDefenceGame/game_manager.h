@@ -3,6 +3,8 @@
 
 #include "manager.h"
 #include "config_manager.h"
+#include "enemy_manager.h"
+#include "wave_manager.h"
 #include "resources_manager.h"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
@@ -27,6 +29,7 @@ public:
 			}
 			Uint64 current_counter = SDL_GetPerformanceCounter();
 			double delta = static_cast<double>(current_counter - last_counter) / (counter_freq);
+			last_counter = current_counter;
 			if (delta * 1000 < 1000.0 / 60)
 			{
 				SDL_Delay(static_cast<Uint32>(1000.0 / 60 - delta * 1000));
@@ -49,7 +52,7 @@ protected:
 		init_assert(MIX_Init(), "SDL_mixer初始化失败！");
 		init_assert(TTF_Init(), "SDL_ttf初始化失败！");
 
-		mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+		//mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
 
 		SDL_SetHint(SDL_HINT_IME_IMPLEMENTED_UI, "0");//使用系统默认的输入法界面
 
@@ -66,14 +69,16 @@ protected:
 		SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, window);//将窗口指针设置到属性中，供渲染器创建时使用
 		SDL_SetNumberProperty(props, SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER, 1);//启用垂直同步
 		renderer = SDL_CreateRendererWithProperties(props);
+		SDL_DestroyProperties(props);
 		init_assert(renderer, "创建渲染器失败！");
 
-		init_assert(ResourcesManager::instance()->load_from_file(renderer, mixer), "加载游戏资源失败！");
+		init_assert(ResourcesManager::instance()->load_from_file(renderer), "加载游戏资源失败！");
 
 		init_assert(generate_tile_map_texture(), "生成瓦片地图失败");//初始化config_manager.h内置的SDL_FRect rect_tile_map
 	}
 	~GameManager()
 	{
+		//MIX_DestroyMixer(mixer);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 
@@ -92,7 +97,7 @@ private:
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	MIX_Mixer* mixer = nullptr;
+	//MIX_Mixer* mixer = nullptr;
 
 	SDL_Texture* tex_tile_map = nullptr;//永久保存整张地图纹理的核心纹理对象
 private:
@@ -109,6 +114,13 @@ private:
 	}
 	void on_update(double delta)
 	{
+		static ConfigManager* instance = ConfigManager::instance();
+
+		if (!instance->is_game_over)
+		{
+			WaveManager::instance()->on_update(delta);
+			EnemyManager::instance()->on_update(delta);
+		}
 
 	}
 	void on_render()
@@ -117,6 +129,8 @@ private:
 		static SDL_FRect& rect_dst = instance->rect_tile_map;
 
 		SDL_RenderTexture(renderer, tex_tile_map, nullptr, &rect_dst);
+
+		EnemyManager::instance()->on_render(renderer);
 	}
 	
 	bool generate_tile_map_texture()

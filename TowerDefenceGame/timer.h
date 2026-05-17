@@ -22,7 +22,7 @@ public:
 
 	void set_one_shot(bool flag)
 	{
-		one_shot = false;
+		one_shot = flag;
 	}
 
 	void set_on_timeout(std::function<void()> on_timeout)

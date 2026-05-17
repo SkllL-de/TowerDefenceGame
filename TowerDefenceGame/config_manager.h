@@ -117,45 +117,45 @@ public:
 			if (json_wave_interval && json_wave_interval->type == cJSON_Number)
 				wave.interval = json_wave_interval->valuedouble;
 
-			cJSON* json_wave_spwan_list = cJSON_GetObjectItem(json_wave, "spawn_list");
-			if(json_wave_spwan_list && json_wave_spwan_list->type == cJSON_Array)
+			cJSON* json_wave_spawn_list = cJSON_GetObjectItem(json_wave, "spawn_list");
+			if(json_wave_spawn_list && json_wave_spawn_list->type == cJSON_Array)
 			{
-				cJSON* json_spwan_event = nullptr;
-				cJSON_ArrayForEach(json_spwan_event, json_wave_spwan_list)
+				cJSON* json_spawn_event = nullptr;
+				cJSON_ArrayForEach(json_spawn_event, json_wave_spawn_list)
 				{
-					if (json_spwan_event->type != cJSON_Object)
+					if (json_spawn_event->type != cJSON_Object)
 						continue;
 
-					wave.spwan_event_list.emplace_back();
-					Wave::SpwanEvent& spwan_event = wave.spwan_event_list.back();
+					wave.spawn_event_list.emplace_back();
+					Wave::SpawnEvent& spawn_event = wave.spawn_event_list.back();
 
-					cJSON* json_spwan_event_interval = cJSON_GetObjectItem(json_spwan_event, "interval");
-					if (json_spwan_event_interval && json_spwan_event_interval->type == cJSON_Number)
-						spwan_event.interval = json_spwan_event_interval->valuedouble;
+					cJSON* json_spawn_event_interval = cJSON_GetObjectItem(json_spawn_event, "interval");
+					if (json_spawn_event_interval && json_spawn_event_interval->type == cJSON_Number)
+						spawn_event.interval = json_spawn_event_interval->valuedouble;
 
-					cJSON* json_spwan_event_point = cJSON_GetObjectItem(json_spwan_event, "point");
-					if (json_spwan_event_point && json_spwan_event_point->type == cJSON_Number)
-						spwan_event.spwan_point = json_spwan_event_point->valueint;
+					cJSON* json_spawn_event_point = cJSON_GetObjectItem(json_spawn_event, "point");
+					if (json_spawn_event_point && json_spawn_event_point->type == cJSON_Number)
+						spawn_event.spawn_point = json_spawn_event_point->valueint;
 
-					cJSON* json_spwan_event_enemy_type = cJSON_GetObjectItem(json_spwan_event, "enemty");
-					if (json_spwan_event_enemy_type && json_spwan_event_enemy_type->type == cJSON_String)
+					cJSON* json_spawn_event_enemy_type = cJSON_GetObjectItem(json_spawn_event, "enemy");
+					if (json_spawn_event_enemy_type && json_spawn_event_enemy_type->type == cJSON_String)
 					{
-						const std::string str_enemy_type = json_spwan_event_enemy_type->valuestring;
+						const std::string str_enemy_type = json_spawn_event_enemy_type->valuestring;
 						if (str_enemy_type == "Slim")
-							spwan_event.enemy_type = EnemyType::Slim;
+							spawn_event.enemy_type = EnemyType::Slim;
 						else if (str_enemy_type == "KingSlim")
-							spwan_event.enemy_type = EnemyType::KingSlim;
+							spawn_event.enemy_type = EnemyType::KingSlim;
 						else if (str_enemy_type == "Skeleton")
-							spwan_event.enemy_type = EnemyType::Skeleton;
+							spawn_event.enemy_type = EnemyType::Skeleton;
 						else if (str_enemy_type == "Goblin")
-							spwan_event.enemy_type = EnemyType::Goblin;
+							spawn_event.enemy_type = EnemyType::Goblin;
 						else if (str_enemy_type == "GoblinPriest")
-							spwan_event.enemy_type = EnemyType::GoblinPriest;
+							spawn_event.enemy_type = EnemyType::GoblinPriest;
 						//enemy_type不是以上任何一种类型时，enemy_type仍保留默认值Slim
 					}
 				}
-				//如果控制添加spwan_event_list的cJSON_ForEach循环后，spwan_event仍为空，则删除在wave_list数组末尾新增的wave格
-				if (wave.spwan_event_list.empty())
+				//如果控制添加spawn_event_list的cJSON_ForEach循环后，spawn_event仍为空，则删除在wave_list数组末尾新增的wave格
+				if (wave.spawn_event_list.empty())
 					wave_list.pop_back();
 			}
 		}
@@ -201,11 +201,11 @@ public:
 		parse_tower_template(axeman_template, cJSON_GetObjectItem(json_tower, "axeman"));
 		parse_tower_template(gunner_template, cJSON_GetObjectItem(json_tower, "gunner"));
 
-		parse_enemy_template(slim_template, cJSON_GetObjectItem(json_tower, "slim"));
-		parse_enemy_template(king_slim_template, cJSON_GetObjectItem(json_tower, "king_slim"));
-		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_tower, "skeleton"));
-		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_tower, "goblin"));
-		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_tower, "goblin_priest"));
+		parse_enemy_template(slim_template, cJSON_GetObjectItem(json_enemy, "slim"));
+		parse_enemy_template(king_slim_template, cJSON_GetObjectItem(json_enemy, "king_slim"));
+		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
+		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
+		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_enemy, "goblin_priest"));
 
 		cJSON_Delete(json_root);
 		return true;
