@@ -87,7 +87,7 @@ public:
 		if (can_fire) on_fire();
 	}
 
-	void on_redner(SDL_Renderer* renderer)
+	void on_render(SDL_Renderer* renderer)
 	{
 		static SDL_Point point;
 
@@ -208,7 +208,7 @@ private:
 
 		if (!target_enemy) return;
 
-		can_fire = true;
+		can_fire = false;
 		static ConfigManager* instance = ConfigManager::instance();
 		static const ResourcesManager::AudioPool& audio_pool = ResourcesManager::instance()->get_audio_pool();
 		static AudioManager* audio_manager = AudioManager::instance();
