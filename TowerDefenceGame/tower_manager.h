@@ -26,7 +26,7 @@ public:
 	void on_render(SDL_Renderer* renderer)
 	{
 		for (Tower* tower : tower_list)
-			tower->on_redner(renderer);
+			tower->on_render(renderer);
 	}
 
 	double get_place_cost(TowerType type)
@@ -116,10 +116,11 @@ public:
 		static const SDL_FRect& rect = ConfigManager::instance()->rect_tile_map;
 
 		position.x = rect.x + idx.x * SIZE_TILE + SIZE_TILE / 2;
-		position.y = rect.x + idx.y * SIZE_TILE + SIZE_TILE / 2;
+		position.y = rect.y + idx.y * SIZE_TILE + SIZE_TILE / 2;
+		tower->set_position(position);
 		tower_list.push_back(tower);
 
-		ConfigManager::instance()->map.place_tower(idx);
+		ConfigManager::instance()->map.place_tower(idx);//表示此处已经有防御塔，不可以再放置
 
 		static const ResourcesManager::AudioPool& audio_pool
 			= ResourcesManager::instance()->get_audio_pool();
