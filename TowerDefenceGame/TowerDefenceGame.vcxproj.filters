@@ -112,6 +112,9 @@
     <ClInclude Include="coin_prop.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="status_bar.h">
+      <Filter>头文件\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -134,6 +137,9 @@
     </Filter>
     <Filter Include="头文件\tower">
       <UniqueIdentifier>{f2b67c7f-32bf-4f9e-a45a-ffe547f55633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ui">
+      <UniqueIdentifier>{9ac3e31d-5918-4017-a13e-e03de19facc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
