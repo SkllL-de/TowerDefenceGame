@@ -68,7 +68,7 @@ public:
 		SDL_RenderTexture(renderer, tex_coin, nullptr, &rect_dst);
 
 		rect_dst.x += 32 + 10 + offset_shadow.x;
-		rect_dst.y = rect_dst.y + (static_cast<float>(32) - height_text) / 2 + offset_shadow.y;
+		rect_dst.y = rect_dst.y + (rect_dst.h - height_text) / 2 + offset_shadow.y;
 		rect_dst.w = width_text, rect_dst.h = height_text;
 		SDL_RenderTexture(renderer, tex_text_background, nullptr, &rect_dst);
 

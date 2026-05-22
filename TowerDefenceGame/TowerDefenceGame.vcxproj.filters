@@ -115,6 +115,9 @@
     <ClInclude Include="status_bar.h">
       <Filter>头文件\ui</Filter>
     </ClInclude>
+    <ClInclude Include="panel.h">
+      <Filter>头文件\ui\panel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -140,6 +143,9 @@
     </Filter>
     <Filter Include="头文件\ui">
       <UniqueIdentifier>{9ac3e31d-5918-4017-a13e-e03de19facc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ui\panel">
+      <UniqueIdentifier>{985fc61a-52d8-482d-b7e3-ba46eb41142a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
