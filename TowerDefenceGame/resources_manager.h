@@ -50,6 +50,7 @@ enum class ResID
 	Tex_UIPlaceHoveredLeft,
 	Tex_UIPlaceHoveredRight,
 	Tex_UIUpgradeIdle,
+	Tex_UIUpgradeHoveredTop,
 	Tex_UIUpgradeHoveredLeft,
 	Tex_UIUpgradeHoveredRight,
 	Tex_UIHomeAvatar,
@@ -140,6 +141,7 @@ public:
 		texture_pool[ResID::Tex_UIPlaceHoveredLeft] = IMG_LoadTexture(renderer, "resources/ui_place_hovered_left.png");
 		texture_pool[ResID::Tex_UIPlaceHoveredRight] = IMG_LoadTexture(renderer, "resources/ui_place_hovered_right.png");
 		texture_pool[ResID::Tex_UIUpgradeIdle] = IMG_LoadTexture(renderer, "resources/ui_upgrade_idle.png");
+		texture_pool[ResID::Tex_UIUpgradeHoveredTop] = IMG_LoadTexture(renderer, "resources/ui_upgrade_hovered_top.png");
 		texture_pool[ResID::Tex_UIUpgradeHoveredLeft] = IMG_LoadTexture(renderer, "resources/ui_upgrade_hovered_left.png");
 		texture_pool[ResID::Tex_UIUpgradeHoveredRight] = IMG_LoadTexture(renderer, "resources/ui_upgrade_hovered_right.png");
 		texture_pool[ResID::Tex_UIHomeAvatar] = IMG_LoadTexture(renderer, "resources/ui_home_avatar.png");
