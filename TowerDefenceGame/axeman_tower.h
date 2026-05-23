@@ -35,7 +35,7 @@ public:
 		tower_type = TowerType::Axeman;
 
 		fire_speed = 5;
-		bullet_type = Arrow;
+		bullet_type = Axe;
 	}
 
 	~AxemanTower() = default;

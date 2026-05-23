@@ -153,10 +153,7 @@ public:
 
 protected:
 	TowerManager() = default;
-	~TowerManager()
-	{
-
-	}
+	~TowerManager() = default;
 
 private:
 	std::vector<Tower*> tower_list;

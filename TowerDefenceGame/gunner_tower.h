@@ -34,7 +34,7 @@ public:
 
 		tower_type = TowerType::Gunner;
 		fire_speed = 6;
-		bullet_type = Arrow;
+		bullet_type = Shell;
 	}
 
 	~GunnerTower() = default;
