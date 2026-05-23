@@ -9,6 +9,9 @@
 #include "tower_manager.h"
 #include "bullet_manager.h"
 #include "status_bar.h"
+#include "panel.h"
+#include "place_panel.h"
+#include "upgrade_panel.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
@@ -83,10 +86,17 @@ protected:
 
 		init_assert(generate_tile_map_texture(), "生成瓦片地图失败");//初始化config_manager.h内置的SDL_FRect rect_tile_map
 	
-		status_bar.set_position(15, 15);
+		status_bar.set_position(15, 15);//设定玩家状态栏的基准定位点
+
+		place_panel = new PlacePanel();
+		upgrade_panel = new UpgradePanel();
 	}
 	~GameManager()
 	{
+
+		delete place_panel;
+		delete upgrade_panel;
+
 		//MIX_DestroyMixer(mixer);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
@@ -111,6 +121,10 @@ private:
 	//MIX_Mixer* mixer = nullptr;
 
 	SDL_Texture* tex_tile_map = nullptr;//永久保存整张地图纹理的核心纹理对象
+
+	Panel* place_panel = nullptr;
+	Panel* upgrade_panel = nullptr;
+
 private:
 	void init_assert(bool flag, const char* err_msg)
 	{
@@ -225,6 +239,20 @@ private:
 		SDL_RenderTexture(renderer, ResourcesManager::instance()->get_texture_pool().find(ResID::Tex_Home)->second, nullptr, &rect_dst);
 
 		SDL_SetRenderTarget(renderer, nullptr);
+
+		return true;
+	}
+
+	bool get_cursor_idx_tile(SDL_FPoint& idx_tile_selected, int screen_x, int screen_y)
+	{
+		static const Map& map = ConfigManager::instance()->map;
+		static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
+
+		if (screen_x < rect_tile_map.x || screen_x > rect_tile_map.x + rect_tile_map.w
+			|| screen_y < rect_tile_map.y || screen_y > rect_tile_map.y + rect_tile_map.h)
+			return false;
+
+		idx_tile_selected.x = std::min((screen_x - rect_tile_map.x) / SIZE_TILE, (float)(map.get_width() - 1));
 
 		return true;
 	}
