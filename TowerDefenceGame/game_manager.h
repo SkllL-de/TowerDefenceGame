@@ -9,6 +9,7 @@
 #include "tower_manager.h"
 #include "bullet_manager.h"
 #include "status_bar.h"
+#include "coin_manager.h"
 #include "panel.h"
 #include "place_panel.h"
 #include "upgrade_panel.h"
@@ -133,10 +134,50 @@ private:
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", err_msg, window);
 		exit(-1);
 	}
+
 	void on_input()
 	{
+		static SDL_Point pos_center;
+		static SDL_Point idx_tile_selected;
+		static ConfigManager* instance = ConfigManager::instance();
 
+		switch (event.type)
+		{
+		case SDL_EVENT_QUIT:
+			is_quit = true;
+			break;
+		case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			if (instance->is_game_over)
+				break;
+			if (get_cursor_idx_tile(idx_tile_selected, event.motion.x, event.motion.y))
+			{
+				get_selected_tile_center_pos(pos_center, idx_tile_selected);
+
+				if (check_home(idx_tile_selected))
+				{
+					upgrade_panel->set_idx_tile(idx_tile_selected);
+					upgrade_panel->set_center_pos(pos_center);
+					upgrade_panel->show();
+				}
+				else if (can_place_tower(idx_tile_selected))
+				{
+					place_panel->set_idx_tile(idx_tile_selected);
+					place_panel->set_center_pos(pos_center);
+					place_panel->show();
+				}
+			}
+			break;
+		default:
+			break;
+		}
+
+		if (!instance->is_game_over)
+		{
+			place_panel->on_input(event);
+			upgrade_panel->on_input(event);
+		}
 	}
+
 	void on_update(double delta)
 	{
 		static ConfigManager* instance = ConfigManager::instance();
@@ -144,10 +185,13 @@ private:
 		if (!instance->is_game_over)
 		{
 			status_bar.on_update(renderer);
+			place_panel->on_update(renderer);
+			upgrade_panel->on_update(renderer);
 			WaveManager::instance()->on_update(delta);
 			EnemyManager::instance()->on_update(delta);
 			BulletManager::instance()->on_update(delta);
 			TowerManager::instance()->on_update(delta);
+			CoinManager::instance()->on_update(delta);
 		}
 
 	}
@@ -161,9 +205,12 @@ private:
 		EnemyManager::instance()->on_render(renderer);
 		BulletManager::instance()->on_render(renderer);
 		TowerManager::instance()->on_render(renderer);
+		CoinManager::instance()->on_render(renderer);
 
 		if (!instance->is_game_over)
 		{
+			place_panel->on_render(renderer);
+			upgrade_panel->on_render(renderer);
 			status_bar.on_render(renderer);
 		}
 	}
@@ -243,7 +290,15 @@ private:
 		return true;
 	}
 
-	bool get_cursor_idx_tile(SDL_FPoint& idx_tile_selected, int screen_x, int screen_y)
+	bool check_home(const SDL_Point& idx_tile_selected)
+	{
+		static const Map& map = ConfigManager::instance()->map;
+		static const SDL_Point& idx_home = map.get_idx_home();
+
+		return (idx_home.x == idx_tile_selected.x && idx_home.y == idx_tile_selected.y);
+	}
+
+	bool get_cursor_idx_tile(SDL_Point& idx_tile_selected, int screen_x, int screen_y)
 	{
 		static const Map& map = ConfigManager::instance()->map;
 		static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
@@ -253,8 +308,26 @@ private:
 			return false;
 
 		idx_tile_selected.x = std::min((screen_x - rect_tile_map.x) / SIZE_TILE, (float)(map.get_width() - 1));
+		idx_tile_selected.y = std::min((screen_y - rect_tile_map.y) / SIZE_TILE, (float)(map.get_height() - 1));
 
 		return true;
 	}
+
+	bool can_place_tower(const SDL_Point& idx_tile_selected) const
+	{
+		static const Map& map = ConfigManager::instance()->map;
+		const Tile& tile = map.get_tile_map()[idx_tile_selected.y][idx_tile_selected.x];
+
+		return (tile.decoration < 0 && tile.direction == Tile::Direction::None && !tile.has_tower);
+	}
+
+	void get_selected_tile_center_pos(SDL_Point& pos, const SDL_Point& idx_tile_selected) const
+	{
+		static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
+
+		pos.x = rect_tile_map.x + idx_tile_selected.x * SIZE_TILE + SIZE_TILE / 2;
+		pos.y = rect_tile_map.y + idx_tile_selected.y * SIZE_TILE + SIZE_TILE / 2;
+	}
+
 };
 #endif // !_GAME_MANAGER_H_
