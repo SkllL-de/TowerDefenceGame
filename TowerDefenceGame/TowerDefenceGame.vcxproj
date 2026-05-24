@@ -142,6 +142,7 @@
     <ClInclude Include="audio_manager.h" />
     <ClInclude Include="axeman_tower.h" />
     <ClInclude Include="axe_bullet.h" />
+    <ClInclude Include="banner.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="bullet_manager.h" />
     <ClInclude Include="bullet_type.h" />
