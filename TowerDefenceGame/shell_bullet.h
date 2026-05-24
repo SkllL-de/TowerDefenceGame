@@ -58,10 +58,10 @@ public:
 
 		static SDL_Point point;
 
-		position.x = (int)(position.x - 96 / 2);
-		position.y = (int)(position.y - 96 / 2);
+		point.x = (int)(position.x - 96 / 2);
+		point.y = (int)(position.y - 96 / 2);
 
-		animation.on_render(renderer, point);
+		animation_explode.on_render(renderer, point);
 	}
 
 	void on_collide(Enemy* enemy) override
@@ -74,8 +74,6 @@ public:
 		audio_manager->PlayMusic(audio_pool.find(ResID::Sound_ShellHit)->second);
 
 		disable_collide();
-
-		Bullet::on_collide(enemy);
 	}
 private:
 	Animation animation_explode;

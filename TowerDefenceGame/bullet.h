@@ -95,8 +95,8 @@ public:
 	{
 		static SDL_Point point;
 
-		position.x = (int)(position.x - size.x / 2);
-		position.y = (int)(position.y - size.y / 2);
+		point.x = (int)(position.x - size.x / 2);
+		point.y = (int)(position.y - size.y / 2);
 
 		animation.on_render(renderer, point, angle_anim_rotated);
 	}
