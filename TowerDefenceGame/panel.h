@@ -34,11 +34,6 @@ public:
 		center_pos = pos;
 	}
 
-	void on_input()
-	{
-
-	}
-
 	void on_input(const SDL_Event& event)
 	{
 		if (!visible) return;
@@ -135,6 +130,7 @@ public:
 		tex_text_background = SDL_CreateTextureFromSurface(renderer, suf_text_background);
 		tex_text_foreground = SDL_CreateTextureFromSurface(renderer, suf_text_foreground);
 	}
+
 	virtual void on_render(SDL_Renderer* renderer)
 	{
 		if (!visible) return;
@@ -215,8 +211,8 @@ protected:
 	virtual void on_click_right_area() = 0;
 
 private:
-	const int size_button = 48;
-	const int width = 144, height = 144;
+	const int size_button = 48;//每个防御塔按钮的长/宽都为48
+	const int width = 144, height = 144;//带着三种防御塔的圈的大小(长3*48/宽3*48)
 	const SDL_Point offset_top = { 48 , 6 };//按钮的偏移
 	const SDL_Point offset_left = { 8 , 80 };
 	const SDL_Point offset_right = { 90 , 80 };
