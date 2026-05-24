@@ -1,6 +1,7 @@
 ﻿#ifndef _GAME_MANAGER_H_
 #define _GAME_MANAGER_H_
 
+#include "banner.h"
 #include "manager.h"
 #include "config_manager.h"
 #include "enemy_manager.h"
@@ -13,6 +14,7 @@
 #include "panel.h"
 #include "place_panel.h"
 #include "upgrade_panel.h"
+#include "player_manager.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
@@ -26,8 +28,9 @@ class GameManager : public Manager<GameManager>
 public:
 	int run(int argc, char** argv)
 	{
-		//test
-		TowerManager::instance()->place_tower(TowerType::Archer, { 5, 0 });
+		//TowerManager::instance()->place_tower(TowerType::Archer, { 5, 0 });
+
+		AudioManager::instance()->PlayBGM(ResourcesManager::instance()->get_audio_pool().find(ResID::Music_BGM)->second, 1500);
 
 		Uint64 last_counter = SDL_GetPerformanceCounter();
 		Uint64 counter_freq = SDL_GetPerformanceFrequency();
@@ -89,14 +92,16 @@ protected:
 	
 		status_bar.set_position(15, 15);//设定玩家状态栏的基准定位点
 
+		banner = new Banner();
 		place_panel = new PlacePanel();
 		upgrade_panel = new UpgradePanel();
 	}
 	~GameManager()
 	{
 
-		delete place_panel;
 		delete upgrade_panel;
+		delete place_panel;
+		delete banner;
 
 		//MIX_DestroyMixer(mixer);
 		SDL_DestroyRenderer(renderer);
@@ -125,6 +130,7 @@ private:
 
 	Panel* place_panel = nullptr;
 	Panel* upgrade_panel = nullptr;
+	Banner* banner = nullptr;
 
 private:
 	void init_assert(bool flag, const char* err_msg)
@@ -175,11 +181,13 @@ private:
 		{
 			place_panel->on_input(event);
 			upgrade_panel->on_input(event);
+			PlayerManager::instance()->on_input(event);
 		}
 	}
 
 	void on_update(double delta)
 	{
+		static bool is_game_over_last_tick = false;
 		static ConfigManager* instance = ConfigManager::instance();
 
 		if (!instance->is_game_over)
@@ -192,8 +200,26 @@ private:
 			BulletManager::instance()->on_update(delta);
 			TowerManager::instance()->on_update(delta);
 			CoinManager::instance()->on_update(delta);
+			PlayerManager::instance()->on_update(delta);
+
+			return;
 		}
 
+		if (!is_game_over_last_tick && instance->is_game_over)
+		{
+			static const ResourcesManager::AudioPool& audio_pool
+				= ResourcesManager::instance()->get_audio_pool();
+
+			//Mix_FadeOutMusic
+			AudioManager::instance()->PlayFadeOutMusic(
+				audio_pool.find(instance->is_game_win ? ResID::Sound_Win : ResID::Sound_Loss)->second, 5000);
+		}
+
+		is_game_over_last_tick = instance->is_game_over;//=true
+
+		banner->on_update(delta);
+		if (banner->check_end_display())
+			is_quit = true;
 	}
 	void on_render()
 	{
@@ -206,13 +232,21 @@ private:
 		BulletManager::instance()->on_render(renderer);
 		TowerManager::instance()->on_render(renderer);
 		CoinManager::instance()->on_render(renderer);
+		PlayerManager::instance()->on_render(renderer);
 
 		if (!instance->is_game_over)
 		{
 			place_panel->on_render(renderer);
 			upgrade_panel->on_render(renderer);
 			status_bar.on_render(renderer);
+
+			return;
 		}
+
+		int width_screen, height_screen;
+		SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+		banner->set_center_position({(double)width_screen / 2, (double)height_screen / 2});
+		banner->on_render(renderer);
 	}
 	
 	bool generate_tile_map_texture()
