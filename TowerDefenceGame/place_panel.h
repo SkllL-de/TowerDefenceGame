@@ -100,7 +100,7 @@ protected:
 
 private:
 	const SDL_Color color_region_frame = { 30, 80, 162, 175 };
-	const SDL_Color color_region_content = { 0, 149, 217, 175 };
+	const SDL_Color color_region_content = { 0, 149, 217, 75 };
 private:
 	int reg_top = 0, reg_left = 0, reg_right = 0;
 };
