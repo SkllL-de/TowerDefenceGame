@@ -55,7 +55,7 @@ public:
 		return num_coin;
 	}
 
-	CoinPropList& get_coin_prop()
+	CoinPropList& get_coin_prop_list()
 	{
 		return coin_prop_list;
 	}

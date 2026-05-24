@@ -162,6 +162,7 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="panel.h" />
     <ClInclude Include="place_panel.h" />
+    <ClInclude Include="player_manager.h" />
     <ClInclude Include="resources_manager.h" />
     <ClInclude Include="route.h" />
     <ClInclude Include="shell_bullet.h" />
