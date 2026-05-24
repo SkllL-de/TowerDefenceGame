@@ -36,6 +36,28 @@ public:
 
 	void on_input(const SDL_Event& event)
 	{
+		if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+		{
+			CoinManager::CoinPropList& coin_prop_list = CoinManager::instance()->get_coin_prop_list();
+			static const ResourcesManager::AudioPool& audio_pool = ResourcesManager::instance()->get_audio_pool();
+
+			for (CoinProp* coin_prop : coin_prop_list)
+			{
+				if (coin_prop->can_remove())
+					continue;
+
+				if (center_pos.x - width / 2 <= coin_prop->get_position().x
+					&& center_pos.x + width / 2 >= coin_prop->get_position().x
+					&& center_pos.y - height / 2 <= coin_prop->get_position().y
+					&& center_pos.y + height / 2 >= coin_prop->get_position().y)
+				{
+					coin_prop->make_invalid();
+					CoinManager::instance()->increase_coin(10);
+
+					AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
+				}
+			}
+		}
 		if (!visible) return;
 
 		switch (event.type)
