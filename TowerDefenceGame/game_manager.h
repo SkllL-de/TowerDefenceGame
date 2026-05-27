@@ -33,7 +33,7 @@ public:
 		AudioManager::instance()->PlayBGM(ResourcesManager::instance()->get_audio_pool().find(ResID::Music_BGM)->second, 1500);
 
 		Uint64 last_counter = SDL_GetPerformanceCounter();
-		Uint64 counter_freq = SDL_GetPerformanceFrequency();
+		const Uint64 counter_freq = SDL_GetPerformanceFrequency();
 
 		while (!is_quit)
 		{
@@ -41,6 +41,14 @@ public:
 			{
 				on_input();
 			}
+
+			if (is_paused)
+			{
+				last_counter = SDL_GetPerformanceCounter();
+				SDL_Delay(10);
+				continue;
+			}
+
 			Uint64 current_counter = SDL_GetPerformanceCounter();
 			double delta = static_cast<double>(current_counter - last_counter) / (counter_freq);
 			last_counter = current_counter;
@@ -59,6 +67,7 @@ public:
 		}
 		return 0;
 	}
+
 protected:
 	GameManager()
 	{
@@ -75,9 +84,17 @@ protected:
 		init_assert(config->map.load("map.csv"), "加载游戏地图失败");//初始化了config_manager的Map map
 		init_assert(config->load_level_config("level.json"), "加载关卡配置失败");//初始化了config_manager的vector<Wave> wave_list
 		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config_manager的所有Struct XxxxxTemplate
-
-		window = SDL_CreateWindow(config->basic_template.window_title.c_str(), config->basic_template.window_width, config->basic_template.window_height, 0);
+		
+		scale = config->basic_template.scale;
+		int window_width = config->basic_template.window_width * scale,
+			window_height = config->basic_template.window_height * scale;
+		window = SDL_CreateWindow(config->basic_template.window_title.c_str(),  window_width, window_height, 0);
 		init_assert(window, "创建游戏窗口失败！");
+
+
+		SDL_GetWindowSizeInPixels(window, &window_width, &window_height);
+		printf("%d %d\n", window_width, window_height);
+
 
 		SDL_PropertiesID props = SDL_CreateProperties();
 		SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, window);//将窗口指针设置到属性中，供渲染器创建时使用
@@ -132,6 +149,9 @@ private:
 	Panel* upgrade_panel = nullptr;
 	Banner* banner = nullptr;
 
+	float scale = 1.0;
+	bool is_paused = false;
+
 private:
 	void init_assert(bool flag, const char* err_msg)
 	{
@@ -152,10 +172,17 @@ private:
 		case SDL_EVENT_QUIT:
 			is_quit = true;
 			break;
+		case SDL_EVENT_KEY_DOWN:
+			if(event.key.key == SDLK_ESCAPE)
+			is_paused = !is_paused;
+			break;
+		case SDL_EVENT_MOUSE_MOTION:
+			try_pick_up_coin(event);
+			break;
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 			if (instance->is_game_over)
 				break;
-			if (get_cursor_idx_tile(idx_tile_selected, event.motion.x, event.motion.y))
+			if (get_cursor_idx_tile(idx_tile_selected, event.motion.x / scale, event.motion.y / scale))
 			{
 				get_selected_tile_center_pos(pos_center, idx_tile_selected);
 
@@ -205,7 +232,7 @@ private:
 			return;
 		}
 
-		if (!is_game_over_last_tick && instance->is_game_over)
+		if (!is_game_over_last_tick && instance->is_game_over)//保证播放结束音效只执行一次
 		{
 			static const ResourcesManager::AudioPool& audio_pool
 				= ResourcesManager::instance()->get_audio_pool();
@@ -215,16 +242,19 @@ private:
 				audio_pool.find(instance->is_game_win ? ResID::Sound_Win : ResID::Sound_Loss)->second, 5000);
 		}
 
-		is_game_over_last_tick = instance->is_game_over;//=true
+		is_game_over_last_tick = instance->is_game_over;
 
-		banner->on_update(delta);
+		banner->on_update(delta);//is_game_over=true后会执行多次，is_game_over=false时不会执行
 		if (banner->check_end_display())
 			is_quit = true;
 	}
+
 	void on_render()
 	{
 		static ConfigManager* instance = ConfigManager::instance();
 		static SDL_FRect& rect_dst = instance->rect_tile_map;
+
+		SDL_SetRenderScale(renderer, scale, scale);
 
 		SDL_RenderTexture(renderer, tex_tile_map, nullptr, &rect_dst);
 
@@ -243,8 +273,10 @@ private:
 			return;
 		}
 
-		int width_screen, height_screen;
-		SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+		int width_screen= instance->basic_template.window_width,
+			height_screen = instance->basic_template.window_height;
+		//SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+		//printf("%d %d\n", width_screen, height_screen);
 		banner->set_center_position({(double)width_screen / 2, (double)height_screen / 2});
 		banner->on_render(renderer);
 	}
@@ -268,10 +300,10 @@ private:
 		if (!tex_tile_map) return false;
 
 		ConfigManager* config = ConfigManager::instance();
-		rect_tile_map.x = (config->basic_template.window_width - width_tex_tile_map) / 2;
-		rect_tile_map.y = (config->basic_template.window_height - height_tex_tile_map) / 2;
-		rect_tile_map.w = width_tex_tile_map;
-		rect_tile_map.h = height_tex_tile_map;
+		rect_tile_map.x = (config->basic_template.window_width - width_tex_tile_map) / 2; //  * scale;
+		rect_tile_map.y = (config->basic_template.window_height - height_tex_tile_map) / 2; //  * scale;
+		rect_tile_map.w = width_tex_tile_map; //* scale;
+			rect_tile_map.h = height_tex_tile_map; //*scale;
 
 		SDL_SetTextureBlendMode(tex_tile_map, SDL_BLENDMODE_BLEND);//开启纹理的透明混合功能
 		SDL_SetRenderTarget(renderer, tex_tile_map);//先把所有瓦片一次性画到一张大纹理上,之后每一帧只画这一张大纹理
@@ -363,5 +395,33 @@ private:
 		pos.y = rect_tile_map.y + idx_tile_selected.y * SIZE_TILE + SIZE_TILE / 2;
 	}
 
+	void try_pick_up_coin(SDL_Event& event)
+	{
+		
+		CoinManager::CoinPropList& coin_prop_list = CoinManager::instance()->get_coin_prop_list();
+		if (coin_prop_list.empty())return;
+		
+		static const ResourcesManager::AudioPool& audio_pool = ResourcesManager::instance()->get_audio_pool();
+		
+		int mouse_x = event.motion.x / scale;
+		int mouse_y = event.motion.y / scale;
+
+		for (CoinProp* coin_prop : coin_prop_list)
+		{
+			if (coin_prop->can_remove())
+				continue;
+
+			if (mouse_x <= coin_prop->get_position().x + coin_prop->get_size().x
+				&& mouse_x >= coin_prop->get_position().x
+				&& mouse_y <= coin_prop->get_position().y + coin_prop->get_size().y
+				&& mouse_y >= coin_prop->get_position().y)
+			{
+				coin_prop->make_invalid();
+				CoinManager::instance()->increase_coin(10);
+
+				AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
+			}
+		}
+	}
 };
 #endif // !_GAME_MANAGER_H_

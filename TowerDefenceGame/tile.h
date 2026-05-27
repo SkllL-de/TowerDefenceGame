@@ -4,6 +4,7 @@
 #include <vector>
 
 #define SIZE_TILE 48
+//extern float scale;
 
 struct Tile
 {
