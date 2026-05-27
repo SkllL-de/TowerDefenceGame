@@ -42,6 +42,16 @@ public:
 				if (deleteable) delete coin_prop;
 				return deleteable;
 			}), coin_prop_list.end());
+
+
+		static double passed_time = 0.0;
+		passed_time += delta;
+
+		if (passed_time >= 1.0)
+		{
+			increase_coin(1);
+			passed_time -= 1.0;
+		}
 	}
 
 	void on_render(SDL_Renderer* renderer)

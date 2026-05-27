@@ -92,8 +92,8 @@ protected:
 		init_assert(window, "创建游戏窗口失败！");
 
 
-		SDL_GetWindowSizeInPixels(window, &window_width, &window_height);
-		printf("%d %d\n", window_width, window_height);
+		//SDL_GetWindowSizeInPixels(window, &window_width, &window_height);
+		//printf("%d %d\n", window_width, window_height);
 
 
 		SDL_PropertiesID props = SDL_CreateProperties();
