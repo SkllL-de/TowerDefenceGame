@@ -20,6 +20,7 @@ public:
 		std::string window_title = "村庄保卫战！";
 		int window_width = 1280;
 		int window_height = 720;
+		float scale = 1.0;
 	};
 
 	struct PlayerTemplate
@@ -222,6 +223,7 @@ private:
 		cJSON* json_window_title = cJSON_GetObjectItem(json_root, "window_title");
 		cJSON* json_window_height = cJSON_GetObjectItem(json_root, "window_height");
 		cJSON* json_window_width = cJSON_GetObjectItem(json_root, "window_width");
+		cJSON* json_window_scale = cJSON_GetObjectItem(json_root, "window_scale");
 
 		if (json_window_title && json_window_title->type == cJSON_String)
 			tpl.window_title = json_window_title->valuestring;
@@ -229,6 +231,8 @@ private:
 			tpl.window_height = json_window_height->valueint;
 		if (json_window_width && json_window_width->type == cJSON_Number)
 			tpl.window_width = json_window_width->valueint;
+		if (json_window_scale && json_window_scale->type == cJSON_Number)
+			tpl.scale = json_window_scale->valuedouble;
 	}
 
 	void parse_player_template(PlayerTemplate& tpl, cJSON* json_root)

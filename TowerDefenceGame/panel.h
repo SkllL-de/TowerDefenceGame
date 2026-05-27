@@ -3,6 +3,7 @@
 
 #include "tile.h"
 #include "resources_manager.h"
+#include "config_manager.h"
 #include <SDL3/SDL.h>
 #include <string>
 
@@ -12,6 +13,7 @@ public:
 	Panel()
 	{
 		tex_select_cursor = ResourcesManager::instance()->get_texture_pool().find(ResID::Tex_UISelectCursor)->second;
+		scale = ConfigManager::instance()->basic_template.scale;
 	}
 	~Panel()
 	{
@@ -64,7 +66,7 @@ public:
 		{
 		case SDL_EVENT_MOUSE_MOTION:
 		{
-			SDL_Point pos_cursor = { event.motion.x, event.motion.y };
+			SDL_Point pos_cursor = { event.motion.x / scale, event.motion.y / scale };
 			SDL_Rect rect_target = { 0, 0, size_button, size_button };//位置不确定，尺寸确定
 
 			rect_target.x = center_pos.x - width / 2 + offset_top.x;
@@ -159,16 +161,16 @@ public:
 
 		SDL_FRect rect_dst_cursor =
 		{
-			center_pos.x - SIZE_TILE / 2,
-			center_pos.y - SIZE_TILE / 2,
+			(center_pos.x - SIZE_TILE / 2), // scale,
+			(center_pos.y - SIZE_TILE / 2), // scale,
 			 SIZE_TILE, SIZE_TILE
 		};
 		SDL_RenderTexture(renderer, tex_select_cursor, nullptr, &rect_dst_cursor);
 		
 		SDL_FRect rect_dst_panel =
 		{
-			center_pos.x - width / 2,
-			center_pos.y - height / 2,
+			(center_pos.x - width / 2), // scale,
+			(center_pos.y - height / 2), // scale,
 			width, height
 		};
 		SDL_Texture* tex_panel = nullptr;
@@ -226,6 +228,7 @@ protected:
 	SDL_Texture* tex_select_cursor = nullptr;
 	int val_top = 0, val_left = 0, val_right = 0;
 	HoveredTarget hover_target = HoveredTarget::None;
+	float scale = 1.0;
 
 protected:
 	virtual void on_click_top_area() = 0;

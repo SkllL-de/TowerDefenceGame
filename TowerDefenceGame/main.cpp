@@ -1,6 +1,7 @@
 #include <iostream>
 #include "game_manager.h"
 //Manager* Manager::manager = nullptr;
+//float scale = 1.0;
 
 int main(int argc, char** argv)
 {

@@ -37,7 +37,8 @@ public:
 	
 	void set_position(const Vector2& position)
 	{
-		this->position = position;
+		this->position.x = position.x;
+		this->position.y = position.y;
 	}
 
 	const Vector2& get_position() const
