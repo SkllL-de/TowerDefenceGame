@@ -216,7 +216,7 @@ private:
 			return;
 		}
 
-		if (!is_game_over_last_tick && instance->is_game_over)
+		if (!is_game_over_last_tick && instance->is_game_over)//保证播放结束音效只执行一次
 		{
 			static const ResourcesManager::AudioPool& audio_pool
 				= ResourcesManager::instance()->get_audio_pool();
@@ -226,9 +226,9 @@ private:
 				audio_pool.find(instance->is_game_win ? ResID::Sound_Win : ResID::Sound_Loss)->second, 5000);
 		}
 
-		is_game_over_last_tick = instance->is_game_over;//=true
+		is_game_over_last_tick = instance->is_game_over;
 
-		banner->on_update(delta);
+		banner->on_update(delta);//is_game_over=true后会执行多次，is_game_over=false时不会执行
 		if (banner->check_end_display())
 			is_quit = true;
 	}
@@ -257,8 +257,10 @@ private:
 			return;
 		}
 
-		int width_screen, height_screen;
-		SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+		int width_screen= instance->basic_template.window_width,
+			height_screen = instance->basic_template.window_height;
+		//SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+		//printf("%d %d\n", width_screen, height_screen);
 		banner->set_center_position({(double)width_screen / 2, (double)height_screen / 2});
 		banner->on_render(renderer);
 	}
