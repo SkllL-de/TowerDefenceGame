@@ -41,6 +41,14 @@ public:
 			{
 				on_input();
 			}
+
+			if (is_paused)
+			{
+				last_counter = SDL_GetPerformanceCounter();
+				SDL_Delay(10);
+				continue;
+			}
+
 			Uint64 current_counter = SDL_GetPerformanceCounter();
 			double delta = static_cast<double>(current_counter - last_counter) / (counter_freq);
 			last_counter = current_counter;
@@ -142,6 +150,7 @@ private:
 	Banner* banner = nullptr;
 
 	float scale = 1.0;
+	bool is_paused = false;
 
 private:
 	void init_assert(bool flag, const char* err_msg)
@@ -162,6 +171,13 @@ private:
 		{
 		case SDL_EVENT_QUIT:
 			is_quit = true;
+			break;
+		case SDL_EVENT_KEY_DOWN:
+			if(event.key.key == SDLK_ESCAPE)
+			is_paused = !is_paused;
+			break;
+		case SDL_EVENT_MOUSE_MOTION:
+			try_pick_up_coin(event);
 			break;
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 			if (instance->is_game_over)
@@ -379,5 +395,33 @@ private:
 		pos.y = rect_tile_map.y + idx_tile_selected.y * SIZE_TILE + SIZE_TILE / 2;
 	}
 
+	void try_pick_up_coin(SDL_Event& event)
+	{
+		
+		CoinManager::CoinPropList& coin_prop_list = CoinManager::instance()->get_coin_prop_list();
+		if (coin_prop_list.empty())return;
+		
+		static const ResourcesManager::AudioPool& audio_pool = ResourcesManager::instance()->get_audio_pool();
+		
+		int mouse_x = event.motion.x / scale;
+		int mouse_y = event.motion.y / scale;
+
+		for (CoinProp* coin_prop : coin_prop_list)
+		{
+			if (coin_prop->can_remove())
+				continue;
+
+			if (mouse_x <= coin_prop->get_position().x + coin_prop->get_size().x
+				&& mouse_x >= coin_prop->get_position().x
+				&& mouse_y <= coin_prop->get_position().y + coin_prop->get_size().y
+				&& mouse_y >= coin_prop->get_position().y)
+			{
+				coin_prop->make_invalid();
+				CoinManager::instance()->increase_coin(10);
+
+				AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
+			}
+		}
+	}
 };
 #endif // !_GAME_MANAGER_H_

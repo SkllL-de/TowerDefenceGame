@@ -38,7 +38,7 @@ public:
 
 	void on_input(const SDL_Event& event)
 	{
-		if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+		/*if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
 		{
 			CoinManager::CoinPropList& coin_prop_list = CoinManager::instance()->get_coin_prop_list();
 			static const ResourcesManager::AudioPool& audio_pool = ResourcesManager::instance()->get_audio_pool();
@@ -59,7 +59,7 @@ public:
 					AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
 				}
 			}
-		}
+		}*/
 		if (!visible) return;
 
 		switch (event.type)
