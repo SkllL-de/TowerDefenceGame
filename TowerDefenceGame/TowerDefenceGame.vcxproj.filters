@@ -130,6 +130,9 @@
     <ClInclude Include="banner.h">
       <Filter>头文件\ui</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="头文件">
@@ -159,6 +162,9 @@
     <Filter Include="头文件\ui\panel">
       <UniqueIdentifier>{985fc61a-52d8-482d-b7e3-ba46eb41142a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{4840e858-b5e8-4f53-8be9-fc998d9173e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\thridParty\cJSON\cJSON.c">
@@ -167,5 +173,15 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TowerDefenceGame.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
