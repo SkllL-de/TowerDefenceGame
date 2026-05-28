@@ -19,10 +19,12 @@
       每个波次结束也会有大量金币奖励
 
 <img width="144" height="144" alt="ui_place_idle" src="https://github.com/user-attachments/assets/c21aeb7c-c585-482a-8c5d-1517207f734c" />
+<img width="144" height="144" alt="image" src="https://github.com/user-attachments/assets/03cfba9e-ab31-4a1d-a0b8-d800ca827d58" />
 
         鼠标左键/右键点击 敌人行动路径之外 的地图格，轮盘下方会显示建造防御塔所需的金币数
         在金币足够时 拖拽鼠标 至三种防御塔之一，从而放置防御塔
-
+        
+        你也可以点击保护目标点，从而升级防御塔！
 
 - 防御塔种类：
 1. <img width="48" height="47" alt="image" src="https://github.com/user-attachments/assets/9522ce0c-d94b-489c-aba3-42be3b20130f" />弓箭手：单体伤害
