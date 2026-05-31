@@ -20,6 +20,11 @@ class PlayerManager : public Manager<PlayerManager>
 public:
 	void on_input(const SDL_Event& event)
 	{
+		static float mx, my;
+		SDL_GetMouseState(&mx, &my);
+		mouse_position.x = mx / scale;
+		mouse_position.y = my / scale;
+
 		switch (event.type)
 		{
 		case SDL_EVENT_KEY_DOWN:
@@ -188,10 +193,14 @@ public:
 				continue;
 
 			const Vector2& pos_coin_prop = coin_prop->get_position();
-			if (pos_coin_prop.x >= position.x - size.x / 2
+			if ((pos_coin_prop.x >= position.x - size.x / 2
 				&& pos_coin_prop.x <= position.x + size.x / 2
 				&& pos_coin_prop.y >= position.y - size.y / 2
 				&& pos_coin_prop.y <= position.y + size.y / 2)
+				|| (mouse_position.x <= coin_prop->get_position().x + coin_prop->get_size().x
+					&& mouse_position.x >= coin_prop->get_position().x
+					&& mouse_position.y <= coin_prop->get_position().y + coin_prop->get_size().y
+					&& mouse_position.y >= coin_prop->get_position().y))
 			{
 				coin_prop->make_invalid();
 				CoinManager::instance()->increase_coin(10);
@@ -200,6 +209,8 @@ public:
 			}
 		}
 	}
+
+
 
 	void on_render(SDL_Renderer* renderer)
 	{
@@ -305,15 +316,20 @@ protected:
 
 		speed = ConfigManager::instance()->player_template.speed;
 
+		scale = ConfigManager::instance()->basic_template.scale;
+
 		size.x = 96, size.y = 96;
 	}
 
 	~PlayerManager() = default;
 
 private:
+	double scale = 1.0;
+
 	Vector2 size;
 	Vector2 position;
 	Vector2 velocity;
+	Vector2 mouse_position;
 
 	SDL_Rect rect_hitbox_flash = { 0 };
 	SDL_Rect rect_hitbox_impact = { 0 };
@@ -330,6 +346,8 @@ private:
 	bool is_move_down = false;
 	bool is_move_left = false;
 	bool is_move_right = false;
+
+	bool try_pick_up_coin = false;
 
 	Animation anim_idle_up;
 	Animation anim_idle_down;

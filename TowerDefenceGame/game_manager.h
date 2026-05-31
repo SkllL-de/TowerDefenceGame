@@ -176,9 +176,9 @@ private:
 			if(event.key.key == SDLK_ESCAPE)
 			is_paused = !is_paused;
 			break;
-		case SDL_EVENT_MOUSE_MOTION:
+		/*case SDL_EVENT_MOUSE_MOTION:
 			try_pick_up_coin(event);
-			break;
+			break;*/
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 			if (instance->is_game_over)
 				break;
@@ -395,7 +395,7 @@ private:
 		pos.y = rect_tile_map.y + idx_tile_selected.y * SIZE_TILE + SIZE_TILE / 2;
 	}
 
-	void try_pick_up_coin(SDL_Event& event)
+	/*void try_pick_up_coin(SDL_Event& event)
 	{
 		
 		CoinManager::CoinPropList& coin_prop_list = CoinManager::instance()->get_coin_prop_list();
@@ -422,6 +422,6 @@ private:
 				AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
 			}
 		}
-	}
+	}*/
 };
 #endif // !_GAME_MANAGER_H_
