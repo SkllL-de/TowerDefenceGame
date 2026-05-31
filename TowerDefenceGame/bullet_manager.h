@@ -43,7 +43,7 @@ public:
 		return bullet_list;
 	}
 
-	void fire_bullet(BulletType type, const Vector2& position, const Vector2& velocity, double damage)
+	void fire_bullet(BulletType type, const Vector2& position, double speed, const Vector2& velocity, double damage, Enemy* targe_enemy)
 	{
 		Bullet* bullet = nullptr;
 
@@ -64,6 +64,7 @@ public:
 		}
 
 		bullet->set_position(position);
+		bullet->set_speed(speed);
 		bullet->set_velocity(velocity);
 		bullet->set_damage(damage);
 

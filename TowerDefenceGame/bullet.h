@@ -33,6 +33,11 @@ public:
 		this->damage = damage;
 	}
 
+	void set_speed(double speed)
+	{
+		this->speed = speed;
+	}
+
 	const Vector2& get_size() const
 	{
 		return size;
@@ -41,6 +46,11 @@ public:
 	const Vector2& get_position() const
 	{
 		return position;
+	}
+
+	double get_speed()
+	{
+		return speed;
 	}
 
 	double get_damage() const
@@ -77,10 +87,17 @@ public:
 	virtual void on_update(double delta)
 	{
 		animation.on_update(delta);
-		position += velocity * delta;
+
+		if (target_enemy) 
+		{
+			Vector2 direction = target_enemy->get_position() - position;
+			set_velocity(direction.normalize() * speed * 2 * SIZE_TILE);
+		}
 
 		static const SDL_FRect& rect_map
 			= ConfigManager::instance()->rect_tile_map;
+		
+		position += velocity * delta;
 
 		if (position.x - size.x / 2 <= rect_map.x
 			|| position.x + size.x / 2 >= rect_map.x + rect_map.w
@@ -103,6 +120,7 @@ public:
 
 	virtual void on_collide(Enemy* enemy)
 	{
+		if (enemy != target_enemy) return;
 		is_valid = false;
 		is_collisional = false;
 	}
@@ -122,6 +140,8 @@ private:
 	bool is_valid = true;
 	bool is_collisional = true;
 	double angle_anim_rotated = 0;
+	double speed = 0;
+	Enemy* target_enemy = nullptr;
 };
 
 

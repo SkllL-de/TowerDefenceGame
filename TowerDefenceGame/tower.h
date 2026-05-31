@@ -245,7 +245,7 @@ private:
 		timer_fire.restart();
 
 		Vector2 direction = target_enemy->get_position() - position;
-		BulletManager::instance()->fire_bullet(bullet_type, position, direction.normalize() * fire_speed * SIZE_TILE, damage);
+		BulletManager::instance()->fire_bullet(bullet_type, position, fire_speed, direction.normalize() * fire_speed * SIZE_TILE, damage, target_enemy);
 
 		bool is_show_x_anim = abs(direction.x) >= abs(direction.y);
 		if (is_show_x_anim)

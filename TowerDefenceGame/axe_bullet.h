@@ -19,6 +19,7 @@ public:
 		animation.set_interval(0.1);
 		animation.set_frame_data(tex_axe, 4, 2, idx_list);
 
+		can_rotated = false;
 		size.x = 48, size.y = 48;
 	}
 
