@@ -21,8 +21,12 @@ public:
 	{
 		num_hp -= val;
 
-		if (num_hp < 0)
+		if (num_hp <= 0)
+		{
 			num_hp = 0;
+			ConfigManager::instance()->is_game_win = false;
+			ConfigManager::instance()->is_game_over = true;
+		}
 
 		static const ResourcesManager::AudioPool& audio_pool
 			= ResourcesManager::instance()->get_audio_pool();
