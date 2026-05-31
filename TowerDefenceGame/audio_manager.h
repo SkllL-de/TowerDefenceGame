@@ -11,6 +11,8 @@ class AudioManager : public Manager<AudioManager>
 public:
 	void PlayMusic(MIX_Audio* audio)
 	{
+		MIX_Track* track = MIX_CreateTrack(mixer);
+		MIX_SetTrackAudio(track, audio);
 		MIX_PlayAudio(mixer, audio);
 	}
 
