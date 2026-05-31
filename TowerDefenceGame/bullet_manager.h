@@ -67,6 +67,7 @@ public:
 		bullet->set_speed(speed);
 		bullet->set_velocity(velocity);
 		bullet->set_damage(damage);
+		bullet->set_target_enemy(targe_enemy);
 
 		bullet_list.push_back(bullet);
 	}

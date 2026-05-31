@@ -38,6 +38,11 @@ public:
 		this->speed = speed;
 	}
 
+	void set_target_enemy(Enemy* target_enemy)
+	{
+		this->target_enemy = target_enemy;
+	}
+
 	const Vector2& get_size() const
 	{
 		return size;
@@ -84,15 +89,23 @@ public:
 		return !is_valid;
 	}
 
+	Enemy* get_target_enemy() const
+	{
+		return target_enemy;
+	}
+
 	virtual void on_update(double delta)
 	{
+		if (!target_enemy || target_enemy->can_remove()) 
+		{
+			is_valid = false;
+			return;
+		}
+		
 		animation.on_update(delta);
 
-		if (target_enemy) 
-		{
-			Vector2 direction = target_enemy->get_position() - position;
-			set_velocity(direction.normalize() * speed * 2 * SIZE_TILE);
-		}
+		Vector2 direction = target_enemy->get_position() - position;
+		set_velocity(direction.normalize() * speed * SIZE_TILE);
 
 		static const SDL_FRect& rect_map
 			= ConfigManager::instance()->rect_tile_map;
