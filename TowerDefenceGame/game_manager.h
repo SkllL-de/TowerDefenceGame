@@ -343,13 +343,17 @@ private:
 			}
 		}
 
-		const SDL_Point& idx_home = map.get_idx_home();
-		const SDL_FRect rect_dst =
+		const std::vector<SDL_Point>& home_idx_pool = map.get_home_idx_pool();
+		//const SDL_Point& idx_home = map.get_idx_home();
+		for (SDL_Point idx_home : home_idx_pool)
 		{
-			idx_home.x * SIZE_TILE, idx_home.y * SIZE_TILE,
-			SIZE_TILE,SIZE_TILE
-		};
-		SDL_RenderTexture(renderer, ResourcesManager::instance()->get_texture_pool().find(ResID::Tex_Home)->second, nullptr, &rect_dst);
+			const SDL_FRect rect_dst =
+			{
+				idx_home.x * SIZE_TILE, idx_home.y * SIZE_TILE,
+				SIZE_TILE,SIZE_TILE
+			};
+			SDL_RenderTexture(renderer, ResourcesManager::instance()->get_texture_pool().find(ResID::Tex_Home)->second, nullptr, &rect_dst);
+		}
 
 		SDL_SetRenderTarget(renderer, nullptr);
 
@@ -359,9 +363,14 @@ private:
 	bool check_home(const SDL_Point& idx_tile_selected)
 	{
 		static const Map& map = ConfigManager::instance()->map;
-		static const SDL_Point& idx_home = map.get_idx_home();
-
-		return (idx_home.x == idx_tile_selected.x && idx_home.y == idx_tile_selected.y);
+		//static const SDL_Point& idx_home = map.get_idx_home();
+		static const std::vector<SDL_Point>& home_idx_pool = map.get_home_idx_pool();
+		for (SDL_Point idx_home : home_idx_pool)
+		{
+			if (idx_home.x == idx_tile_selected.x && idx_home.y == idx_tile_selected.y)
+				return true;
+		}
+		return false;
 	}
 
 	bool get_cursor_idx_tile(SDL_Point& idx_tile_selected, int screen_x, int screen_y)

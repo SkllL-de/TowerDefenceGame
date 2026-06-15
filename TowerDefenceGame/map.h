@@ -13,6 +13,7 @@ class Map
 {
 public:
 	typedef std::unordered_map<int, Route> SpawnerRoutePool;
+	typedef std::vector<SDL_Point> HomeIdxPool;
 public:
 	Map() = default;
 	~Map() = default;
@@ -79,9 +80,15 @@ public:
 		return tile_map;
 	}
 
-	const SDL_Point& get_idx_home() const
+	/*const SDL_Point& get_idx_home() const
 	{
 		return idx_home;
+	}*/
+
+	const HomeIdxPool& get_home_idx_pool() const
+	{
+		return home_idx_pool;
+
 	}
 
 	const SpawnerRoutePool& get_spawner_route_pool() const
@@ -96,7 +103,8 @@ public:
 
 private:
 	TileMap tile_map;//调用load时初始化，根据map.csv创建瓦片地图
-	SDL_Point idx_home = { 0 };//防守目标点索引坐标
+	//SDL_Point idx_home = { 0 };//防守目标点索引坐标
+	HomeIdxPool home_idx_pool;
 	SpawnerRoutePool spawner_route_pool;//键：0对应防守目标点，正整数对应各个怪物刷新点
 private:
 	std::string trim_str(const std::string& str)
@@ -149,8 +157,9 @@ private:
 
 				if (tile.special_flag == 0)//防守目标点
 				{
-					idx_home.x = x;
-					idx_home.y = y;
+					//idx_home.x = x;
+					//idx_home.y = y;
+					home_idx_pool.push_back({x, y});
 				}
 				else//tile.special_flag > 0:怪物刷新点
 				{

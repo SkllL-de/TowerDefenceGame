@@ -126,29 +126,32 @@ private:
 private:
 	void process_home_collision()
 	{
-		static const SDL_Point& idx_home = ConfigManager::instance()->map.get_idx_home();
+		static const std::vector<SDL_Point>& idx_home_pool = ConfigManager::instance()->map.get_home_idx_pool();
 		static const SDL_FRect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
 
-		static const Vector2 position_home_tile =
-		{
-			rect_tile_map.x + idx_home.x * SIZE_TILE,
-			rect_tile_map.y + idx_home.y * SIZE_TILE,
-		};
-
-		for (Enemy* enemy : enemy_list)
-		{
-			if (enemy->can_remove()) continue;
-
-			const Vector2& position = enemy->get_position();
-
-			if(position.x >= position_home_tile.x
-				&&position.y >= position_home_tile.y
-				&&position.x <= position_home_tile.x + SIZE_TILE
-				&&position.y <= position_home_tile.y + SIZE_TILE)
+		for(const SDL_Point& idx_home : idx_home_pool)
+		{ 
+			const Vector2 position_home_tile =
 			{
-				enemy->make_invalid();
+				rect_tile_map.x + idx_home.x * SIZE_TILE,
+				rect_tile_map.y + idx_home.y * SIZE_TILE,
+			};
 
-				HomeManager::instance()->decrease_hp(enemy->get_damage());
+			for (Enemy* enemy : enemy_list)
+			{
+				if (enemy->can_remove()) continue;
+
+				const Vector2& position = enemy->get_position();
+
+				if (position.x >= position_home_tile.x
+					&& position.y >= position_home_tile.y
+					&& position.x <= position_home_tile.x + SIZE_TILE
+					&& position.y <= position_home_tile.y + SIZE_TILE)
+				{
+					enemy->make_invalid();
+
+					HomeManager::instance()->decrease_hp(enemy->get_damage());
+				}
 			}
 		}
 	}
