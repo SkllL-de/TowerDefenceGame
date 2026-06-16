@@ -60,6 +60,7 @@ enum class ResID
 	Tex_UIGameOverBar,
 	Tex_UIWinText,
 	Tex_UILossText,
+	Tex_UIPauseText,
 
 	Sound_ArrowFire_1,
 	Sound_ArrowFire_2,
@@ -151,6 +152,7 @@ public:
 		texture_pool[ResID::Tex_UIGameOverBar] = IMG_LoadTexture(renderer, "resources/ui_game_over_bar.png");
 		texture_pool[ResID::Tex_UIWinText] = IMG_LoadTexture(renderer, "resources/ui_win_text.png");
 		texture_pool[ResID::Tex_UILossText] = IMG_LoadTexture(renderer, "resources/ui_loss_text.png");
+		texture_pool[ResID::Tex_UIPauseText] = IMG_LoadTexture(renderer, "resources/ui_pause_text.png");
 
 		for (const auto& pair : texture_pool)
 			if (!pair.second) return false;

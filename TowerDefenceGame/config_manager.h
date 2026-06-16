@@ -85,6 +85,8 @@ public:
 public:
 	bool load_level_config(const std::string& path)
 	{
+		wave_list.clear();
+
 		std::ifstream file(path);
 
 		if (!file.good()) return false;//返回false点1：文件错误

@@ -22,14 +22,28 @@ public:
 
 	void on_update(SDL_Renderer* renderer)
 	{
+		CoinManager* coin_mgr_instance = CoinManager::instance();
 		static TTF_Font* font = ResourcesManager::instance()->get_font_pool().find(ResID::Font_Main)->second;
+
+		/*static int last_coin_num = (int)coin_mgr_instance->get_current_coin_num();
+		int current_coin_num = coin_mgr_instance->get_current_coin_num();*/
+		//if ((current_coin_num == last_coin_num) && !is_first_update) 
+		//{
+		//	is_first_update = false;
+		//	return;
+		//}
 
 		SDL_DestroyTexture(tex_text_background);
 		tex_text_background = nullptr;
 		SDL_DestroyTexture(tex_text_foreground);
 		tex_text_foreground = nullptr;
-
+		
 		std::string str_val = std::to_string((int)CoinManager::instance()->get_current_coin_num());
+
+		//if(last_coin_num + 1 < current_coin_num)
+		//	str_val += "+" + std::to_string(current_coin_num - last_coin_num);
+		//last_coin_num = current_coin_num;
+
 		SDL_Surface* suf_text_background = TTF_RenderText_Blended(font, str_val.c_str(), str_val.length(), color_text_background);
 		SDL_Surface* suf_text_foreground = TTF_RenderText_Blended(font, str_val.c_str(), str_val.length(), color_text_foreground);
 	
@@ -115,6 +129,7 @@ private:
 	int width_text = 0, height_text = 0;
 	SDL_Texture* tex_text_background = nullptr;
 	SDL_Texture* tex_text_foreground = nullptr;
+	bool is_first_update = true;
 
 };
 

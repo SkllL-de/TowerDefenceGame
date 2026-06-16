@@ -20,6 +20,7 @@ public:
 
 	bool load(const std::string& path)
 	{
+		tile_map.clear();
 		std::ifstream file(path);
 		if (!file.good()) return false;
 

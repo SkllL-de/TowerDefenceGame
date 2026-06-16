@@ -10,6 +10,7 @@
 #include "tower_manager.h"
 #include "bullet_manager.h"
 #include "status_bar.h"
+#include "pause_banner.h"
 #include "coin_manager.h"
 #include "panel.h"
 #include "place_panel.h"
@@ -44,6 +45,11 @@ public:
 
 			if (is_paused)
 			{
+				render_base_scene();
+				pause_banner->on_update();
+				pause_banner->on_render(renderer);
+				SDL_RenderPresent(renderer);
+
 				last_counter = SDL_GetPerformanceCounter();
 				SDL_Delay(10);
 				continue;
@@ -58,10 +64,10 @@ public:
 			}
 			on_update(delta);
 			
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+			/*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			SDL_RenderClear(renderer);
-
-			on_render();
+			on_render();*/
+			render_base_scene();
 
 			SDL_RenderPresent(renderer);
 		}
@@ -81,8 +87,8 @@ protected:
 
 		ConfigManager* config = ConfigManager::instance();
 
-		init_assert(config->map.load("map.csv"), "加载游戏地图失败");//初始化了config_manager的Map map
-		init_assert(config->load_level_config("level.json"), "加载关卡配置失败");//初始化了config_manager的vector<Wave> wave_list
+		init_assert(config->map.load("map/map0.csv"), "加载游戏地图失败");//初始化了config_manager的Map map
+		init_assert(config->load_level_config("level/level0.json"), "加载关卡配置失败");//初始化了config_manager的vector<Wave> wave_list
 		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config_manager的所有Struct XxxxxTemplate
 		
 		scale = config->basic_template.scale;
@@ -110,6 +116,7 @@ protected:
 		status_bar.set_position(15, 15);//设定玩家状态栏的基准定位点
 
 		banner = new Banner();
+		pause_banner = new PauseBanner();
 		place_panel = new PlacePanel();
 		upgrade_panel = new UpgradePanel();
 	}
@@ -118,6 +125,7 @@ protected:
 
 		delete upgrade_panel;
 		delete place_panel;
+		delete pause_banner;
 		delete banner;
 
 		//MIX_DestroyMixer(mixer);
@@ -138,7 +146,7 @@ private:
 	bool is_quit = false;
 
 	StatusBar status_bar;
-
+	
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	//MIX_Mixer* mixer = nullptr;
@@ -148,6 +156,7 @@ private:
 	Panel* place_panel = nullptr;
 	Panel* upgrade_panel = nullptr;
 	Banner* banner = nullptr;
+	PauseBanner* pause_banner;
 
 	float scale = 1.0;
 	bool is_paused = false;
@@ -159,6 +168,13 @@ private:
 
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", err_msg, window);
 		exit(-1);
+	}
+
+	void render_base_scene()
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
+		on_render();
 	}
 
 	void on_input()
@@ -264,6 +280,9 @@ private:
 		CoinManager::instance()->on_render(renderer);
 		PlayerManager::instance()->on_render(renderer);
 
+		/*if(is_paused)
+			pause_banner->on_render(renderer);*/
+		
 		if (!instance->is_game_over)
 		{
 			place_panel->on_render(renderer);
