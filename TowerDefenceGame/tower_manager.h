@@ -29,6 +29,11 @@ public:
 			tower->on_render(renderer);
 	}
 
+	void on_reset()
+	{
+		tower_list.clear();
+	}
+
 	double get_place_cost(TowerType type)
 	{
 		static ConfigManager* instance = ConfigManager::instance();

@@ -17,6 +17,7 @@
 #include "upgrade_panel.h"
 #include "player_manager.h"
 
+#include <string>
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_mixer/SDL_mixer.h>
@@ -38,6 +39,13 @@ public:
 
 		while (!is_quit)
 		{
+			if (can_enter_next_level)
+			{
+				can_enter_next_level = false;
+				on_reset();
+				enter_next_level();
+			}
+
 			while (SDL_PollEvent(&event))
 			{
 				on_input();
@@ -87,8 +95,8 @@ protected:
 
 		ConfigManager* config = ConfigManager::instance();
 
-		init_assert(config->map.load("map/map0.csv"), "加载游戏地图失败");//初始化了config_manager的Map map
-		init_assert(config->load_level_config("level/level0.json"), "加载关卡配置失败");//初始化了config_manager的vector<Wave> wave_list
+		init_assert(config->map.load(get_path_map()), "加载游戏地图失败");//"map/map0.csv",初始化了config_manager的Map map
+		init_assert(config->load_level_config(get_path_level()), "加载关卡配置失败");//"level/level0.json",初始化了config_manager的vector<Wave> wave_list
 		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config_manager的所有Struct XxxxxTemplate
 		
 		scale = config->basic_template.scale;
@@ -144,6 +152,7 @@ protected:
 private:
 	SDL_Event event;
 	bool is_quit = false;
+	bool can_enter_next_level = false;
 
 	StatusBar status_bar;
 	
@@ -161,6 +170,8 @@ private:
 	float scale = 1.0;
 	bool is_paused = false;
 
+	int level = 0;
+	
 private:
 	void init_assert(bool flag, const char* err_msg)
 	{
@@ -262,7 +273,12 @@ private:
 
 		banner->on_update(delta);//is_game_over=true后会执行多次，is_game_over=false时不会执行
 		if (banner->check_end_display())
-			is_quit = true;
+		{
+			//is_quit = true;
+			is_game_over_last_tick = false;
+			can_enter_next_level = true;
+			
+		}
 	}
 
 	void on_render()
@@ -423,6 +439,35 @@ private:
 		pos.y = rect_tile_map.y + idx_tile_selected.y * SIZE_TILE + SIZE_TILE / 2;
 	}
 
+	std::string get_path_map()
+	{
+		return "map/map" + std::to_string(level) + ".csv";
+	}
+
+	std::string get_path_level()
+	{
+		return "level/level" + std::to_string(level) + ".json";
+	}
+
+	void enter_next_level()
+	{
+		level = level + 1;
+		init_assert(ConfigManager::instance()->map.load(get_path_map()), "加载游戏地图失败");
+		init_assert(ConfigManager::instance()->load_level_config(get_path_level()), "加载关卡配置失败");
+		generate_tile_map_texture();
+	}
+
+	void on_reset()
+	{
+		ConfigManager::instance()->is_game_over = false;
+		ConfigManager::instance()->is_game_win = false;
+		banner->on_reset();
+		CoinManager::instance()->on_reset();
+		TowerManager::instance()->on_reset();
+		HomeManager::instance()->on_reset();
+		WaveManager::instance()->on_reset();
+		BulletManager::instance()->on_reset();
+	}
 	/*void try_pick_up_coin(SDL_Event& event)
 	{
 		

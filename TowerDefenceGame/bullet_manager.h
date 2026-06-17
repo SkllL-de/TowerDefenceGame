@@ -38,6 +38,14 @@ public:
 			bullet->on_render(renderer);
 	}
 
+	void on_reset()
+	{
+		for (Bullet* bullet : bullet_list)
+		{
+			bullet->make_invalid();
+		}
+	}
+
 	BulletList& get_bullet_list()
 	{
 		return bullet_list;

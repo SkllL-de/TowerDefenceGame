@@ -36,6 +36,11 @@ public:
 		AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_HomeHurt)->second);
 	}
 
+	void on_reset()
+	{
+		num_hp = ConfigManager::instance()->num_initial_hp;
+	}
+
 protected:
 	HomeManager()
 	{

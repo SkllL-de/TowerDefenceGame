@@ -60,6 +60,13 @@ public:
 			coin_prop->on_render(renderer);
 	}
 
+	void on_reset()
+	{
+		num_coin = ConfigManager::instance()->num_initial_coin;
+		for (CoinProp* coin_prop : coin_prop_list)
+			coin_prop->make_invalid();
+	}
+
 	double get_current_coin_num()
 	{
 		return num_coin;
@@ -87,6 +94,7 @@ protected:
 	{
 		for (CoinProp* coin_prop : coin_prop_list)
 			delete coin_prop;
+		coin_prop_list.clear();
 	}
 
 private:

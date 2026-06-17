@@ -65,6 +65,12 @@ public:
 		return is_end_display;
 	}
 
+	void on_reset()
+	{
+		timer_display.restart();
+		is_end_display = false;
+	}
+
 private:
 	Vector2 pos_center;
 

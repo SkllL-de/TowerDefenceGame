@@ -17,14 +17,14 @@ public:
 		timer_jump.set_one_shot(true);
 		timer_jump.set_wait_time(interval_jump);
 		timer_jump.set_on_timeout(
-			[&]()
+			[this]()
 			{
 				is_jumping = false;
 			});
 		timer_disappear.set_one_shot(true);
 		timer_disappear.set_wait_time(interval_disappear);
 		timer_disappear.set_on_timeout(
-			[&]()
+			[this]()
 			{
 				is_valid = false;
 			});

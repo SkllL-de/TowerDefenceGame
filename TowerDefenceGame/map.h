@@ -21,6 +21,7 @@ public:
 	bool load(const std::string& path)
 	{
 		tile_map.clear();
+		home_idx_pool.clear();
 		std::ifstream file(path);
 		if (!file.good()) return false;
 

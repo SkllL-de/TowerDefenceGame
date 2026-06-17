@@ -47,16 +47,30 @@ public:
 			}
 		}
 	}
+
+	void on_reset()
+	{
+		is_wave_started = false;
+		is_spawned_last_enemy = false;
+
+		idx_wave = 0;
+		idx_spawn_event = 0;
+
+		timer_start_wave.restart();
+		timer_spawn_enemy.restart();
+	}
+
 protected:
 	WaveManager()
 	{
-		static const std::vector<Wave>& wave_list = ConfigManager::instance()->wave_list;
+		//static const std::vector<Wave>& wave_list = ConfigManager::instance()->wave_list;
 
 		timer_start_wave.set_one_shot(true);
-		timer_start_wave.set_wait_time(wave_list[0].interval);
+		timer_start_wave.set_wait_time(ConfigManager::instance()->wave_list[0].interval);
 		timer_start_wave.set_on_timeout(
 			[&]()
 			{
+				const std::vector<Wave>& wave_list = ConfigManager::instance()->wave_list;
 				is_wave_started = true;
 				timer_spawn_enemy.set_wait_time(wave_list[idx_wave].spawn_event_list[0].interval);
 				timer_spawn_enemy.restart();
@@ -67,7 +81,7 @@ protected:
 		timer_spawn_enemy.set_on_timeout(
 			[&]()
 			{
-				const std::vector<Wave::SpawnEvent>& spawn_event_list = wave_list[idx_wave].spawn_event_list;
+				const std::vector<Wave::SpawnEvent>& spawn_event_list = ConfigManager::instance()->wave_list[idx_wave].spawn_event_list;
 				const Wave::SpawnEvent& spawn_event = spawn_event_list[idx_spawn_event];
 
 				EnemyManager::instance()->spawn_enemy(spawn_event.enemy_type, spawn_event.spawn_point);

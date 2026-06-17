@@ -26,7 +26,7 @@ public:
 		animation_explode.set_interval(0.1);
 		animation_explode.set_frame_data(tex_explode, 5, 1, idx_explode_list);
 		animation_explode.set_on_finished(
-			[&]()
+			[this]()
 			{
 				make_invalid();
 			});
@@ -44,8 +44,10 @@ public:
 			Bullet::on_update(delta);
 			return;
 		}
-
-		animation_explode.on_update(delta);
+		else if (!can_remove())
+		{
+			animation_explode.on_update(delta);
+		}
 	}
 
 	void on_render(SDL_Renderer* renderer) override
@@ -55,13 +57,15 @@ public:
 			Bullet::on_render(renderer);
 			return;
 		}
+		else if(!can_remove())
+		{
+			static SDL_Point point;
 
-		static SDL_Point point;
+			point.x = (int)(position.x - 96 / 2);
+			point.y = (int)(position.y - 96 / 2);
 
-		point.x = (int)(position.x - 96 / 2);
-		point.y = (int)(position.y - 96 / 2);
-
-		animation_explode.on_render(renderer, point);
+			animation_explode.on_render(renderer, point);
+		}
 	}
 
 	void on_collide(Enemy* enemy) override
