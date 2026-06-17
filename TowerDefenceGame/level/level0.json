@@ -5,5 +5,41 @@
 				"interval":	2,
 				"point":	1,
 				"enemy":	"Slim"
+			}, {
+				"interval":	2,
+				"point":	1,
+				"enemy":	"Slim"
+			}, {
+				"interval":	2,
+				"point":	1,
+				"enemy":	"Slim"
+			}, {
+				"interval":	2,
+				"point":	1,
+				"enemy":	"Slim"
+			}, {
+				"interval":	5,
+				"point":	1,
+				"enemy":	"Skeleton"
+			}]
+	}, {
+		"rewards":	50,
+		"interval":	2,
+		"spawn_list":	[{
+				"interval":	1,
+				"point":	2,
+				"enemy":	"Slim"
+			}, {
+				"interval":	1,
+				"point":	2,
+				"enemy":	"Slim"
+			}, {
+				"interval":	1,
+				"point":	2,
+				"enemy":	"Slim"
+			}, {
+				"interval":	1,
+				"point":	2,
+				"enemy":	"Slim"
 			}]
 	}]

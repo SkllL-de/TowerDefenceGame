@@ -452,6 +452,11 @@ private:
 	void enter_next_level()
 	{
 		level = level + 1;
+		if (level >= ConfigManager::instance()->basic_template.levels)
+		{
+			is_quit = true;
+			return;
+		}
 		init_assert(ConfigManager::instance()->map.load(get_path_map()), "加载游戏地图失败");
 		init_assert(ConfigManager::instance()->load_level_config(get_path_level()), "加载关卡配置失败");
 		generate_tile_map_texture();

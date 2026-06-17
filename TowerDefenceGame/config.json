@@ -3,7 +3,8 @@
 		"window_width":	1280,
 		"window_height":	720,
 		"window_title":	"村庄保卫战！",
-		"window_scale": 1.5
+		"window_scale": 1.5,
+		"levels": 3
 	},
 	"player":	{
 		"speed":	5,
