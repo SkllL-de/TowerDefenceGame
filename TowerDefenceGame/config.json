@@ -9,7 +9,7 @@
 	"parameter":	{
 		"num_initial_hp": 10,
 		"num_initial_coin": 150,
-		"cnum_coin_per_prop": 40
+		"cnum_coin_per_prop": 25
 	},
 	"player":	{
 		"speed":	5,

@@ -40,7 +40,7 @@ public:
 
 	void set_target_enemy(Enemy* target_enemy)
 	{
-		this->target_enemy = target_enemy;
+		this->target_enemy = target_enemy; 
 	}
 
 	const Vector2& get_size() const
@@ -96,16 +96,31 @@ public:
 
 	virtual void on_update(double delta)
 	{
-		if (!target_enemy || target_enemy->can_remove()) 
+		has_target_ememy = (target_enemy && !target_enemy->can_remove());
+		if(is_finding_enemy && has_target_ememy)
 		{
-			is_valid = false;
-			return;
+			last_enemy_pos = target_enemy->get_position();
+			direction = last_enemy_pos - position;
+			set_velocity(direction.normalize() * speed * SIZE_TILE);
 		}
-		
-		animation.on_update(delta);
+		else
+		{
+			is_finding_enemy = false;
+		}
 
-		Vector2 direction = target_enemy->get_position() - position;
-		set_velocity(direction.normalize() * speed * SIZE_TILE);
+		/*if (!has_target_ememy) 
+		{
+			if(position.x >= last_enemy_pos.x - size.x / 2
+				&& position.y >= last_enemy_pos.y - size.y / 2
+				&& position.x <= last_enemy_pos.x + size.x / 2
+				&& position.y <= last_enemy_pos.y + size.y / 2)
+			{
+				is_valid = false;
+				return;
+			}
+		}*/
+
+		animation.on_update(delta);
 
 		static const SDL_FRect& rect_map
 			= ConfigManager::instance()->rect_tile_map;
@@ -133,7 +148,7 @@ public:
 
 	virtual void on_collide(Enemy* enemy)
 	{
-		if (enemy != target_enemy) return;
+		//if (enemy != target_enemy) return;
 		is_valid = false;
 		is_collisional = false;
 	}
@@ -142,6 +157,7 @@ protected:
 	Vector2 size;
 	Vector2 velocity;
 	Vector2 position;
+	Vector2 direction;
 	
 	Animation animation;
 	bool can_rotated = false;
@@ -152,8 +168,11 @@ protected:
 private:
 	bool is_valid = true;
 	bool is_collisional = true;
+	bool is_finding_enemy = true;
+	bool has_target_ememy = true;
 	double angle_anim_rotated = 0;
 	double speed = 0;
+	Vector2 last_enemy_pos;
 	Enemy* target_enemy = nullptr;
 };
 
