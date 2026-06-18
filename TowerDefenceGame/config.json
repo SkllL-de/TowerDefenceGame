@@ -4,7 +4,12 @@
 		"window_height":	720,
 		"window_title":	"村庄保卫战！",
 		"window_scale": 1.5,
-		"levels": 3
+		"levels": 4
+	},
+	"parameter":	{
+		"num_initial_hp": 10,
+		"num_initial_coin": 150,
+		"cnum_coin_per_prop": 40
 	},
 	"player":	{
 		"speed":	5,

@@ -203,7 +203,7 @@ public:
 					&& mouse_position.y >= coin_prop->get_position().y))
 			{
 				coin_prop->make_invalid();
-				CoinManager::instance()->increase_coin(10);
+				CoinManager::instance()->increase_coin(ConfigManager::instance()->parameter_template.num_coin_per_prop);
 
 				AudioManager::instance()->PlayMusic(audio_pool.find(ResID::Sound_Coin)->second);
 			}

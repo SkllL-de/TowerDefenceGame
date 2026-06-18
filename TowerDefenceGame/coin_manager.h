@@ -62,7 +62,7 @@ public:
 
 	void on_reset()
 	{
-		num_coin = ConfigManager::instance()->num_initial_coin;
+		num_coin = ConfigManager::instance()->parameter_template.num_initial_coin;
 		for (CoinProp* coin_prop : coin_prop_list)
 			coin_prop->make_invalid();
 	}
@@ -88,7 +88,7 @@ public:
 protected:
 	CoinManager()
 	{
-		num_coin = ConfigManager::instance()->num_initial_coin;
+		num_coin = ConfigManager::instance()->parameter_template.num_initial_coin;
 	}
 	~CoinManager()
 	{

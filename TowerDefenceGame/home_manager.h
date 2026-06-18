@@ -38,13 +38,13 @@ public:
 
 	void on_reset()
 	{
-		num_hp = ConfigManager::instance()->num_initial_hp;
+		num_hp = ConfigManager::instance()->parameter_template.num_initial_hp;
 	}
 
 protected:
 	HomeManager()
 	{
-		num_hp = ConfigManager::instance()->num_initial_hp;
+		num_hp = ConfigManager::instance()->parameter_template.num_initial_hp;
 	}
 	~HomeManager() = default;
 

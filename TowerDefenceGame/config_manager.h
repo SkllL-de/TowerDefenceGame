@@ -24,6 +24,13 @@ public:
 		int levels = 3;
 	};
 
+	struct ParameterTemplate
+	{
+		double num_initial_hp = 10;//初始目标生命值
+		double num_initial_coin = 100;//初始金币数
+		double num_coin_per_prop = 40;//每次捡到金币道具时，增加的金币数
+	};
+
 	struct PlayerTemplate
 	{
 		double speed = 3;
@@ -67,6 +74,8 @@ public:
 
 	BasicTemplate basic_template;
 
+	ParameterTemplate parameter_template;
+
 	PlayerTemplate player_template;
 
 	TowerTemplate archer_template;
@@ -79,9 +88,9 @@ public:
 	EnemyTemplate goblin_template;
 	EnemyTemplate goblin_priest_template;
 
-	const double num_initial_hp = 10;//初始目标生命值
-	const double num_initial_coin = 100;//初始金币数
-	const double num_coin_per_prop = 10;//每次捡到金币道具时，增加的金币数
+	//const double num_initial_hp = 10;//初始目标生命值
+	//const double num_initial_coin = 100;//初始金币数
+	//const double num_coin_per_prop = 40;//每次捡到金币道具时，增加的金币数
 
 public:
 	bool load_level_config(const std::string& path)
@@ -183,6 +192,7 @@ public:
 		if (!json_root || json_root->type != cJSON_Object) return false;
 
 		cJSON* json_basic = cJSON_GetObjectItem(json_root, "basic");
+		cJSON* json_parameter = cJSON_GetObjectItem(json_root, "parameter");
 		cJSON* json_player = cJSON_GetObjectItem(json_root, "player");
 		cJSON* json_tower = cJSON_GetObjectItem(json_root, "tower");
 		cJSON* json_enemy = cJSON_GetObjectItem(json_root, "enemy");
@@ -198,6 +208,8 @@ public:
 		}
 
 		parse_basic_template(basic_template, json_basic);
+
+		parse_parameter_template(parameter_template, json_parameter);
 
 		parse_player_template(player_template, json_player);
 
@@ -239,6 +251,22 @@ private:
 			tpl.scale = json_window_scale->valuedouble;
 		if (json_levels && json_levels->type == cJSON_Number)
 			tpl.levels = json_levels->valueint;
+	}
+
+	void parse_parameter_template(ParameterTemplate& tpl, cJSON* json_root)
+	{
+		if (!json_root || json_root->type != cJSON_Object) return;
+
+		cJSON* json_num_initial_hp = cJSON_GetObjectItem(json_root, "num_initial_hp");
+		cJSON* json_num_initial_coin = cJSON_GetObjectItem(json_root, "num_initial_coin");
+		cJSON* json_num_coin_per_prop = cJSON_GetObjectItem(json_root, "num_coin_per_prop");
+
+		if (json_num_initial_hp && json_num_initial_hp->type == cJSON_Number)
+			tpl.num_initial_hp = json_num_initial_hp->valuedouble;
+		if (json_num_initial_coin && json_num_initial_coin->type == cJSON_Number)
+			tpl.num_initial_coin = json_num_initial_coin->valuedouble;
+		if (json_num_coin_per_prop && json_num_coin_per_prop->type == cJSON_Number)
+			tpl.num_coin_per_prop = json_num_coin_per_prop->valuedouble;
 	}
 
 	void parse_player_template(PlayerTemplate& tpl, cJSON* json_root)
