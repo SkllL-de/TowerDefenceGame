@@ -4,7 +4,8 @@
 		"window_height":	720,
 		"window_title":	"村庄保卫战！",
 		"window_scale": 1.5,
-		"levels": 4
+		"levels": 4,
+		"begin_level": 1
 	},
 	"parameter":	{
 		"num_initial_hp": 10,

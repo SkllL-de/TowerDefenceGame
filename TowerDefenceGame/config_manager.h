@@ -22,6 +22,7 @@ public:
 		int window_height = 720;
 		float scale = 1.0;
 		int levels = 3;
+		int begin_level = 0;
 	};
 
 	struct ParameterTemplate
@@ -240,6 +241,7 @@ private:
 		cJSON* json_window_width = cJSON_GetObjectItem(json_root, "window_width");
 		cJSON* json_window_scale = cJSON_GetObjectItem(json_root, "window_scale");
 		cJSON* json_levels = cJSON_GetObjectItem(json_root, "levels");
+		cJSON* json_begin_level = cJSON_GetObjectItem(json_root, "begin_level");
 
 		if (json_window_title && json_window_title->type == cJSON_String)
 			tpl.window_title = json_window_title->valuestring;
@@ -251,6 +253,8 @@ private:
 			tpl.scale = json_window_scale->valuedouble;
 		if (json_levels && json_levels->type == cJSON_Number)
 			tpl.levels = json_levels->valueint;
+		if (json_begin_level && json_begin_level->type == cJSON_Number)
+			tpl.begin_level = json_begin_level->valueint;	
 	}
 
 	void parse_parameter_template(ParameterTemplate& tpl, cJSON* json_root)

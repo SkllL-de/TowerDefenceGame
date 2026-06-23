@@ -95,10 +95,12 @@ protected:
 
 		ConfigManager* config = ConfigManager::instance();
 
-		init_assert(config->map.load(get_path_map()), "加载游戏地图失败");//"map/map0.csv",初始化了config_manager的Map map
-		init_assert(config->load_level_config(get_path_level()), "加载关卡配置失败");//"level/level0.json",初始化了config_manager的vector<Wave> wave_list
-		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config_manager的所有Struct XxxxxTemplate
 		
+		init_assert(config->load_game_config("config.json"), "加载游戏配置失败");//初始化了config_manager的所有Struct XxxxxTemplate
+		level = config->basic_template.begin_level;
+		init_assert(config->map.load(get_path_map()), "加载游戏地图失败");//初始化了config_manager的Map map
+		init_assert(config->load_level_config(get_path_level()), "加载关卡配置失败");//初始化了config_manager的vector<Wave> wave_list
+
 		scale = config->basic_template.scale;
 		int window_width = config->basic_template.window_width * scale,
 			window_height = config->basic_template.window_height * scale;
