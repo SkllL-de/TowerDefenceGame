@@ -474,6 +474,7 @@ private:
 		HomeManager::instance()->on_reset();
 		WaveManager::instance()->on_reset();
 		BulletManager::instance()->on_reset();
+		EnemyManager::instance()->on_reset();
 	}
 	/*void try_pick_up_coin(SDL_Event& event)
 	{

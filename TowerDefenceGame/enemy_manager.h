@@ -40,6 +40,14 @@ public:
 			enemy->on_render(renderer);
 	}
 
+	void on_reset()
+	{
+		for (Enemy* enemy : enemy_list)
+			enemy->make_invalid();
+
+		remove_invalid_enemy();
+	}
+
 	void spawn_enemy(EnemyType type, int idx_spawn_point)
 	{
 		static Vector2 position;

@@ -5,7 +5,7 @@
 		"window_title":	"村庄保卫战！",
 		"window_scale": 1.5,
 		"levels": 4,
-		"begin_level": 1
+		"begin_level": 0
 	},
 	"parameter":	{
 		"num_initial_hp": 10,
